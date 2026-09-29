@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Security PIN</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(circle at top left, #24104f, transparent 40%),
+                radial-gradient(circle at bottom right, #003b4d, transparent 40%),
+                #050018;
+            color: white;
+        }
+
+        .pin-container {
+            width: 430px;
+            background: #0B081E;
+            border: 1px solid #241d48;
+            border-radius: 22px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .security-icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            background: linear-gradient(135deg, #00D9FF, #7C3AED);
+            box-shadow: 0 0 30px rgba(0,217,255,0.25);
+        }
+
+        h1 {
+            font-size: 27px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #A8A0B8;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .payment-info {
+            background: #11102A;
+            border: 1px solid #272149;
+            border-radius: 15px;
+            padding: 18px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .label {
+            color: #8f89a3;
+        }
+
+        .value {
+            color: white;
+            font-weight: 600;
+        }
+
+        .amount {
+            color: #00D9FF;
+            font-size: 21px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 10px;
+            color: #d7d2e4;
+            font-size: 14px;
+        }
+
+        .pin-input {
+            width: 100%;
+            height: 60px;
+            border-radius: 13px;
+            border: 1px solid #30285a;
+            background: #07051A;
+            color: white;
+            text-align: center;
+            font-size: 28px;
+            letter-spacing: 12px;
+            outline: none;
+        }
+
+        .pin-input:focus {
+            border-color: #00D9FF;
+            box-shadow: 0 0 15px rgba(0,217,255,0.15);
+        }
+
+        .error {
+            color: #ff6b81;
+            background: rgba(255,60,90,0.08);
+            border: 1px solid rgba(255,60,90,0.25);
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .verify-button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 13px;
+            background: linear-gradient(135deg, #00D9FF, #7C3AED);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .verify-button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .cancel {
+            display: block;
+            margin-top: 18px;
+            color: #9d96b0;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .cancel:hover {
+            color: white;
+        }
+
+        .security-message {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #77718b;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="pin-container">
+
+    <div class="security-icon">
+        🔐
+    </div>
+
+    <h1>Payment Security</h1>
+
+    <p class="subtitle">
+        Enter your 4-digit Payment PIN to authorize this transaction.
+    </p>
+
+    <div class="payment-info">
+
+        <div class="info-row">
+            <span class="label">Bank</span>
+            <span class="value">{{ bank }}</span>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Payment Type</span>
+            <span class="value">{{ payment_type }}</span>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Amount</span>
+            <span class="value amount">
+                ₹{{ amount }}
+            </span>
+        </div>
+
+    </div>
+
+    {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="payment_pin">
+            Enter Payment PIN
+        </label>
+
+        <input
+            type="password"
+            id="payment_pin"
+            name="payment_pin"
+            class="pin-input"
+            maxlength="4"
+            minlength="4"
+            inputmode="numeric"
+            pattern="[0-9]{4}"
+            placeholder="••••"
+            autocomplete="off"
+            required
+        >
+
+        <button type="submit" class="verify-button">
+            🔐 Verify & Continue
+        </button>
+    </form>
+
+    <a href="{% url 'ai_router' %}" class="cancel">
+        ← Cancel Payment
+    </a>
+
+    <div class="security-message">
+        Your PIN is securely verified before the payment is processed.
+        Never share your Payment PIN with anyone.
+    </div>
+
+</div>
+
+<script>
+    document.getElementById("payment_pin").addEventListener("input", function () {
+        this.value = this.value.replace(/\D/g, "").slice(0, 4);
+    });
+</script>
+
+</body>
+</html>

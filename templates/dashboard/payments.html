@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Payment History</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #171033,
+                    #050018 48%,
+                    #02000b
+                );
+
+            color: white;
+
+            padding: 35px 25px;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: auto;
+        }
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        .header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+
+            gap: 20px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+
+            margin-bottom: 7px;
+        }
+
+        .header p {
+            color: #9ca3af;
+
+            font-size: 14px;
+        }
+
+        .back-button {
+            text-decoration: none;
+
+            padding: 11px 18px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+        }
+
+        .back-button:hover {
+            border-color: #00d9ff;
+        }
+
+        /* =====================================
+           SUMMARY CARDS
+        ===================================== */
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: #0b081e;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 16px;
+
+            padding: 22px;
+        }
+
+        .summary-label {
+            color: #9ca3af;
+
+            font-size: 13px;
+
+            margin-bottom: 10px;
+        }
+
+        .summary-value {
+            font-size: 25px;
+
+            font-weight: 700;
+        }
+
+        .cyan {
+            color: #00d9ff;
+        }
+
+        .green {
+            color: #22c55e;
+        }
+
+        /* =====================================
+           FILTER BOX
+        ===================================== */
+
+        .filter-box {
+            background: #0b081e;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 16px;
+
+            padding: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        .filter-grid {
+            display: grid;
+
+            grid-template-columns:
+                2fr 1fr 1fr 1fr 1fr auto;
+
+            gap: 10px;
+        }
+
+        .filter-grid input,
+        .filter-grid select {
+            width: 100%;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            border:
+                1px solid #292343;
+
+            background: #07051a;
+
+            color: white;
+
+            outline: none;
+        }
+
+        .filter-grid input:focus,
+        .filter-grid select:focus {
+            border-color: #00d9ff;
+        }
+
+        .filter-grid option {
+            background: #0b081e;
+        }
+
+        .filter-button {
+            padding: 12px 18px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00d9ff,
+                    #7c3aed
+                );
+
+            color: white;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .clear-button {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 12px 15px;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            color: #d1d5db;
+
+            background:
+                rgba(255,255,255,0.04);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+        }
+
+        /* =====================================
+           TABLE CARD
+        ===================================== */
+
+        .table-card {
+            background: #0b081e;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 18px;
+
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 22px 25px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.06);
+        }
+
+        .table-header h2 {
+            font-size: 18px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 950px;
+        }
+
+        th {
+            padding: 15px;
+
+            text-align: left;
+
+            color: #8f8aa3;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            background:
+                rgba(255,255,255,0.015);
+        }
+
+        td {
+            padding: 18px 15px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.05);
+
+            font-size: 13px;
+
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background:
+                rgba(0,217,255,0.025);
+        }
+
+        /* =====================================
+           SERVICE
+        ===================================== */
+
+        .service {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .service-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background:
+                rgba(0,217,255,0.08);
+
+            border:
+                1px solid
+                rgba(0,217,255,0.12);
+
+            font-size: 18px;
+        }
+
+        .service-name {
+            font-weight: 600;
+        }
+
+        .service-description {
+            color: #77728a;
+
+            font-size: 11px;
+
+            margin-top: 4px;
+
+            max-width: 220px;
+        }
+
+        /* =====================================
+           TRANSACTION
+        ===================================== */
+
+        .transaction-id {
+            color: #00d9ff;
+
+            font-family: monospace;
+
+            font-size: 12px;
+        }
+
+        .amount {
+            font-weight: 700;
+
+            color: white;
+        }
+
+        /* =====================================
+           STATUS
+        ===================================== */
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .success {
+            color: #22c55e;
+
+            background:
+                rgba(34,197,94,0.10);
+        }
+
+        .failed {
+            color: #ef4444;
+
+            background:
+                rgba(239,68,68,0.10);
+        }
+
+        /* =====================================
+           VIEW BUTTON
+        ===================================== */
+
+        .view-button {
+            display: inline-block;
+
+            padding: 8px 13px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            color: #00d9ff;
+
+            background:
+                rgba(0,217,255,0.08);
+
+            border:
+                1px solid
+                rgba(0,217,255,0.15);
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+        .view-button:hover {
+            background:
+                rgba(0,217,255,0.15);
+        }
+
+        /* =====================================
+           EMPTY
+        ===================================== */
+
+        .empty {
+            text-align: center;
+
+            padding: 70px 20px;
+
+            color: #8f8aa3;
+        }
+
+        .empty-icon {
+            font-size: 45px;
+
+            margin-bottom: 15px;
+        }
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 1000px) {
+
+            .filter-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .summary-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 20px 12px;
+            }
+
+            .header {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .filter-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>
+                💳 Payment History
+            </h1>
+
+            <p>
+                View and manage all your payment transactions
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="back-button"
+        >
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- =====================================
+         SUMMARY
+    ====================================== -->
+
+    <div class="summary-grid">
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Transactions
+            </div>
+
+            <div class="summary-value cyan">
+                {{ total_payments }}
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Successful Spend
+            </div>
+
+            <div class="summary-value">
+                ₹{{ total_spent|floatformat:2 }}
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Successful Payments
+            </div>
+
+            <div class="summary-value green">
+                {{ successful_payments }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         FILTER
+    ====================================== -->
+
+    <div class="filter-box">
+
+        <form method="get">
+
+            <div class="filter-grid">
+
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search transaction..."
+                    value="{{ search }}"
+                >
+
+
+                <select name="payment_type">
+
+                    <option value="">
+                        All Services
+                    </option>
+
+                    <option
+                        value="MOBILE"
+                        {% if selected_payment_type == "MOBILE" %}
+                            selected
+                        {% endif %}
+                    >
+                        📱 Mobile
+                    </option>
+
+                    <option
+                        value="ELECTRICITY"
+                        {% if selected_payment_type == "ELECTRICITY" %}
+                            selected
+                        {% endif %}
+                    >
+                        💡 Electricity
+                    </option>
+
+                    <option
+                        value="RENT"
+                        {% if selected_payment_type == "RENT" %}
+                            selected
+                        {% endif %}
+                    >
+                        🏠 Rent
+                    </option>
+
+                    <option
+                        value="LOAN"
+                        {% if selected_payment_type == "LOAN" %}
+                            selected
+                        {% endif %}
+                    >
+                        💰 Loan
+                    </option>
+
+                    <option
+                        value="OTHER"
+                        {% if selected_payment_type == "OTHER" %}
+                            selected
+                        {% endif %}
+                    >
+                        🌐 Other
+                    </option>
+
+                </select>
+
+
+                <select name="status">
+
+                    <option value="">
+                        All Status
+                    </option>
+
+                    <option
+                        value="SUCCESS"
+                        {% if selected_status == "SUCCESS" %}
+                            selected
+                        {% endif %}
+                    >
+                        Success
+                    </option>
+
+                    <option
+                        value="FAILED"
+                        {% if selected_status == "FAILED" %}
+                            selected
+                        {% endif %}
+                    >
+                        Failed
+                    </option>
+
+                </select>
+
+
+                <input
+                    type="date"
+                    name="date_from"
+                    value="{{ date_from }}"
+                >
+
+
+                <input
+                    type="date"
+                    name="date_to"
+                    value="{{ date_to }}"
+                >
+
+
+                <button
+                    type="submit"
+                    class="filter-button"
+                >
+                    Filter
+                </button>
+
+
+                <a
+                    href="{% url 'payments' %}"
+                    class="clear-button"
+                >
+                    Clear
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================
+         TABLE
+    ====================================== -->
+
+    <div class="table-card">
+
+
+        <div class="table-header">
+
+            <h2>
+                Recent Transactions
+            </h2>
+
+        </div>
+
+
+        {% if payments %}
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Transaction ID
+                        </th>
+
+                        <th>
+                            Service
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Bank
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for payment in payments %}
+
+                    <tr>
+
+
+                        <!-- TRANSACTION ID -->
+
+                        <td>
+
+                            {% if payment.transaction_id %}
+
+                                <span class="transaction-id">
+                                    {{ payment.transaction_id }}
+                                </span>
+
+                            {% else %}
+
+                                <span>
+                                    Transaction ID Pending
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- SERVICE -->
+
+                        <td>
+
+                            <div class="service">
+
+
+                                <div class="service-icon">
+
+                                    {% if payment.payment_type == "MOBILE" %}
+                                        📱
+
+                                    {% elif payment.payment_type == "ELECTRICITY" %}
+                                        💡
+
+                                    {% elif payment.payment_type == "RENT" %}
+                                        🏠
+
+                                    {% elif payment.payment_type == "LOAN" %}
+                                        💰
+
+                                    {% else %}
+                                        🌐
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div>
+
+                                    <div class="service-name">
+
+                                        {{ payment.get_payment_type_display }}
+
+                                    </div>
+
+
+                                    {% if payment.description %}
+
+                                        <div class="service-description">
+
+                                            {{ payment.description }}
+
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- AMOUNT -->
+
+                        <td>
+
+                            <span class="amount">
+
+                                ₹{{ payment.amount|floatformat:2 }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- BANK -->
+
+                        <td>
+
+                            {% if "AI routed via" in payment.description %}
+
+                                {{ payment.description }}
+
+                            {% else %}
+
+                                AI Routed Bank
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            {% if payment.status == "SUCCESS" %}
+
+                                <span class="status success">
+                                    ● SUCCESS
+                                </span>
+
+                            {% else %}
+
+                                <span class="status failed">
+                                    ● {{ payment.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- DATE -->
+
+                        <td>
+
+                            {{ payment.created_at|date:"d M Y" }}
+
+                            <br>
+
+                            <span style="color:#77728a;font-size:11px;">
+                                {{ payment.created_at|date:"h:i A" }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- VIEW -->
+
+                        <td>
+
+                            <a
+                                href="{% url 'payment_detail' payment.id %}"
+                                class="view-button"
+                            >
+                                View
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        {% else %}
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    💳
+                </div>
+
+                <h3>
+                    No payments found
+                </h3>
+
+                <p style="margin-top:8px;">
+                    Your payment transactions will appear here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

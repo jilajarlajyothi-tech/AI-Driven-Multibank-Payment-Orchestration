@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ request.user.username }} - Profile</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #211044,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    #082b38,
+                    transparent 35%
+                ),
+                #050018;
+
+            color: white;
+
+            min-height: 100vh;
+
+            padding: 40px;
+        }
+
+        .container {
+
+            max-width: 1100px;
+
+            margin: auto;
+        }
+
+        .back-button {
+
+            display: inline-block;
+
+            color: #00d9ff;
+
+            text-decoration: none;
+
+            margin-bottom: 25px;
+
+            font-size: 14px;
+        }
+
+        .back-button:hover {
+
+            color: white;
+        }
+
+        .profile-card {
+
+            background: rgba(11, 8, 30, 0.92);
+
+            border: 1px solid rgba(
+                139,
+                92,
+                246,
+                0.25
+            );
+
+            border-radius: 22px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.45);
+        }
+
+        .profile-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 30px;
+
+            padding-bottom: 30px;
+
+            border-bottom: 1px solid
+                rgba(255,255,255,0.08);
+        }
+
+        .photo-section {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .large-avatar {
+
+            width: 110px;
+
+            height: 110px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #00d9ff
+                );
+
+            color: white;
+
+            font-size: 42px;
+
+            font-weight: bold;
+
+            border: 3px solid
+                rgba(255,255,255,0.15);
+
+            box-shadow:
+                0 0 30px
+                rgba(0,217,255,0.25);
+        }
+
+        .profile-photo {
+
+            object-fit: cover;
+        }
+
+        .photo-button {
+
+            cursor: pointer;
+
+            padding: 9px 18px;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #7c3aed,
+                    #00d9ff
+                );
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.25s;
+        }
+
+        .photo-button:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 0 18px
+                rgba(0,217,255,0.35);
+        }
+
+        .profile-title h1 {
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+        }
+
+        .profile-title p {
+
+            color: #9f94b5;
+
+            font-size: 14px;
+        }
+
+        .section {
+
+            margin-top: 30px;
+        }
+
+        .section-title {
+
+            font-size: 19px;
+
+            margin-bottom: 18px;
+
+            color: #00d9ff;
+        }
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+        .info-card {
+
+            background: #0b081e;
+
+            border: 1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 14px;
+
+            padding: 18px;
+        }
+
+        .info-label {
+
+            color: #8f849f;
+
+            font-size: 12px;
+
+            margin-bottom: 7px;
+        }
+
+        .info-value {
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 600;
+        }
+
+        .bank-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .bank-card {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #120d2b,
+                    #09061a
+                );
+
+            border: 1px solid
+                rgba(0,217,255,0.15);
+
+            border-radius: 16px;
+
+            padding: 20px;
+        }
+
+        .bank-name {
+
+            color: #00d9ff;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            margin-bottom: 15px;
+        }
+
+        .account-number {
+
+            color: #bdb5c9;
+
+            font-size: 14px;
+
+            margin-bottom: 12px;
+        }
+
+        .balance {
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            margin-bottom: 10px;
+        }
+
+        .active {
+
+            color: #22c55e;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .inactive {
+
+            color: #ef4444;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .security-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+        .security-button {
+
+            display: block;
+
+            text-align: center;
+
+            padding: 14px;
+
+            border-radius: 12px;
+
+            background: #120d2b;
+
+            border: 1px solid
+                rgba(139,92,246,0.25);
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition: 0.25s;
+        }
+
+        .security-button:hover {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #7c3aed,
+                    #00d9ff
+                );
+
+            transform: translateY(-2px);
+        }
+
+        .empty {
+
+            color: #8f849f;
+
+            padding: 20px;
+
+            text-align: center;
+
+            background: #0b081e;
+
+            border-radius: 12px;
+        }
+
+        @media(max-width: 750px) {
+
+            body {
+                padding: 20px;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .info-grid,
+            .security-grid,
+            .bank-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+        .add-bank-button {
+
+    display: inline-block;
+
+    margin-bottom: 20px;
+
+    padding: 10px 18px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #7c3aed,
+            #00d9ff
+        );
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.add-bank-button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,217,255,0.2);
+}
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <a
+        href="{% url 'dashboard' %}"
+        class="back-button"
+    >
+        ← Back to Dashboard
+    </a>
+
+
+    <div class="profile-card">
+
+        <!-- PROFILE HEADER -->
+
+        <div class="profile-header">
+
+            <div class="photo-section">
+
+                {% if request.user.profile_photo %}
+
+                    <img
+                        src="{{ request.user.profile_photo.url }}"
+                        class="large-avatar profile-photo"
+                        alt="Profile Photo"
+                    >
+
+                {% else %}
+
+                    <div class="large-avatar">
+
+                        {{ request.user.username|first|upper }}
+
+                    </div>
+
+                {% endif %}
+
+
+                <form
+                    method="post"
+                    enctype="multipart/form-data"
+                    action="{% url 'upload_profile_photo' %}"
+                >
+
+                    {% csrf_token %}
+
+                    <label
+                        for="profile_photo"
+                        class="photo-button"
+                    >
+                        📷 Change Photo
+                    </label>
+
+                    <input
+                        type="file"
+                        id="profile_photo"
+                        name="profile_photo"
+                        accept="image/*"
+                        hidden
+                        onchange="this.form.submit()"
+                    >
+
+                </form>
+
+            </div>
+
+
+            <div class="profile-title">
+
+                <h1>
+                    {{ request.user.username }}
+                </h1>
+
+                <p>
+                    AI Payment Orchestration User
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACCOUNT INFORMATION -->
+
+        <div class="section">
+
+            <div class="section-title">
+                👤 Account Information
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info-card">
+
+                    <div class="info-label">
+                        Username
+                    </div>
+
+                    <div class="info-value">
+                        {{ request.user.username }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-label">
+                        Email
+                    </div>
+
+                    <div class="info-value">
+                        {{ request.user.email }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-label">
+                        First Name
+                    </div>
+
+                    <div class="info-value">
+
+                        {% if request.user.first_name %}
+                            {{ request.user.first_name }}
+                        {% else %}
+                            Not Added
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-label">
+                        Last Name
+                    </div>
+
+                    <div class="info-value">
+
+                        {% if request.user.last_name %}
+                            {{ request.user.last_name }}
+                        {% else %}
+                            Not Added
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-label">
+                        Account Status
+                    </div>
+
+                    <div class="info-value">
+                        {% if request.user.is_active %}
+                            Active
+                        {% else %}
+                            Inactive
+                        {% endif %}
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="info-label">
+                        User Type
+                    </div>
+
+                    <div class="info-value">
+                        User
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BANK ACCOUNTS -->
+
+        <div class="section">
+
+            <div class="section-title">
+                🏦 Connected Bank Accounts
+            </div>
+                <a
+    href="{% url 'add_bank_account' %}"
+    class="add-bank-button"
+>
+    ＋ Add Bank Account
+</a>
+
+            {% if bank_accounts %}
+
+                <div class="bank-grid">
+
+                    {% for account in bank_accounts %}
+
+                        <div class="bank-card">
+
+                            <div class="bank-name">
+                                {{ account.get_bank_name_display }}
+                            </div>
+
+
+                            <div class="account-number">
+
+                                Account:
+                                ****{{ account.account_number|slice:"-4:" }}
+
+                            </div>
+
+
+                            <div class="balance">
+
+                                ₹{{ account.balance|floatformat:2 }}
+
+                            </div>
+
+
+                            {% if account.is_active %}
+
+                                <div class="active">
+                                    ● Active
+                                </div>
+
+                            {% else %}
+
+                                <div class="inactive">
+                                    ● Inactive
+                                </div>
+
+                            {% endif %}
+    
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty">
+
+                    No bank accounts connected yet.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- SECURITY -->
+
+        <div class="section">
+
+            <div class="section-title">
+                🔐 Security
+            </div>
+
+
+            <div class="security-grid">
+
+                <a
+                    href="{% url 'change_password' %}"
+                    class="security-button"
+                >
+                    🔐 Change Password
+                </a>
+
+
+                <a
+                    href="{% url 'set_payment_pin' %}"
+                    class="security-button"
+                >
+                    🔑 Manage Payment PIN
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

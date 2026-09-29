@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Bank Account</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            font-family: Arial, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #211044,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    #082b38,
+                    transparent 35%
+                ),
+                #050018;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 30px;
+        }
+
+        .card {
+
+            width: 100%;
+
+            max-width: 550px;
+
+            background: #0b081e;
+
+            border: 1px solid
+                rgba(139,92,246,0.25);
+
+            border-radius: 22px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0,0,0,0.5);
+        }
+
+        .icon {
+
+            width: 65px;
+
+            height: 65px;
+
+            border-radius: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #00d9ff
+                );
+
+            margin-bottom: 20px;
+        }
+
+        h1 {
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+
+            color: #9f94b5;
+
+            font-size: 14px;
+
+            margin-bottom: 28px;
+        }
+
+        .error {
+
+            background: rgba(239,68,68,0.12);
+
+            border: 1px solid
+                rgba(239,68,68,0.35);
+
+            color: #fca5a5;
+
+            padding: 13px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+
+            margin-bottom: 20px;
+        }
+
+        label {
+
+            display: block;
+
+            color: #c8c0d4;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            margin-bottom: 8px;
+        }
+
+        input,
+        select {
+
+            width: 100%;
+
+            padding: 14px;
+
+            background: #050018;
+
+            border: 1px solid
+                rgba(139,92,246,0.3);
+
+            border-radius: 10px;
+
+            color: white;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+
+            border-color: #00d9ff;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(0,217,255,0.08);
+        }
+
+        select option {
+
+            background: #0b081e;
+
+            color: white;
+        }
+
+        .status-box {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 15px;
+
+            background: #050018;
+
+            border-radius: 10px;
+
+            border: 1px solid
+                rgba(139,92,246,0.25);
+
+            margin-bottom: 20px;
+        }
+
+        .status-box input {
+
+            width: auto;
+        }
+
+        .status-box label {
+
+            margin: 0;
+
+            cursor: pointer;
+        }
+
+        .button {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 15px;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #7c3aed,
+                    #00d9ff
+                );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            margin-top: 8px;
+        }
+
+        .back {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            color: #00d9ff;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="icon">
+        🏦
+    </div>
+
+    <h1>
+        Edit Bank Account
+    </h1>
+
+    <p class="subtitle">
+        Update your connected bank account
+        information.
+    </p>
+
+    {% if error %}
+
+        <div class="error">
+            ⚠️ {{ error }}
+        </div>
+
+    {% endif %}
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <div class="form-group">
+
+            <label for="bank_name">
+                Bank
+            </label>
+
+            <select
+                id="bank_name"
+                name="bank_name"
+                required
+            >
+
+                <option value="SBI"
+                    {% if account.bank_name == "SBI" %}
+                        selected
+                    {% endif %}
+                >
+                    State Bank of India
+                </option>
+
+                <option value="HDFC"
+                    {% if account.bank_name == "HDFC" %}
+                        selected
+                    {% endif %}
+                >
+                    HDFC Bank
+                </option>
+
+                <option value="ICICI"
+                    {% if account.bank_name == "ICICI" %}
+                        selected
+                    {% endif %}
+                >
+                    ICICI Bank
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="account_number">
+                Account Number
+            </label>
+
+            <input
+                type="text"
+                id="account_number"
+                name="account_number"
+                value="{{ account.account_number }}"
+                maxlength="20"
+                required
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="balance">
+                Available Balance
+            </label>
+
+            <input
+                type="number"
+                id="balance"
+                name="balance"
+                value="{{ account.balance }}"
+                min="0"
+                step="0.01"
+                required
+            >
+
+        </div>
+
+        <div class="status-box">
+
+            <input
+                type="checkbox"
+                id="is_active"
+                name="is_active"
+                {% if account.is_active %}
+                    checked
+                {% endif %}
+            >
+
+            <label for="is_active">
+                Keep this bank account active
+            </label>
+
+        </div>
+
+        <button
+            type="submit"
+            class="button"
+        >
+            💾 Save Changes
+        </button>
+
+    </form>
+
+    <a
+        href="{% url 'my_profile' %}"
+        class="back"
+    >
+        ← Back to Profile
+    </a>
+
+</div>
+
+</body>
+
+</html>

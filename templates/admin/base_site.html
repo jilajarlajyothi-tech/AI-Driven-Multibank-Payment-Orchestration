@@ -1,0 +1,34 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block title %}
+Multibank AI Administration
+{% endblock %}
+
+{% block extrastyle %}
+
+{{ block.super }}
+
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'admin/css/admin_custom.css' %}"
+>
+
+{% endblock %}
+
+{% block branding %}
+
+<h1 id="site-name">
+
+    <a href="{% url 'admin:index' %}">
+        Multibank AI
+    </a>
+
+</h1>
+
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}

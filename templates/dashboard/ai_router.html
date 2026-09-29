@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Payment Router</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #171033 0%,
+                    #050018 45%,
+                    #02000b 100%
+                );
+
+            min-height: 100vh;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 950px;
+            margin: auto;
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #9ca3af;
+            font-size: 15px;
+        }
+
+        /* ==============================
+           MAIN CARD
+        ============================== */
+
+        .router-card {
+            background: rgba(11, 8, 30, 0.95);
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.45),
+                0 0 40px rgba(124, 58, 237, 0.08);
+        }
+
+        /* ==============================
+           SERVICE HEADER
+        ============================== */
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px;
+            border-radius: 14px;
+            margin-bottom: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 217, 255, 0.08),
+                    rgba(124, 58, 237, 0.12)
+                );
+
+            border: 1px solid rgba(0, 217, 255, 0.15);
+        }
+
+        .service-icon {
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00d9ff,
+                    #7c3aed
+                );
+
+            font-size: 25px;
+        }
+
+        .service-info h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .service-info p {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        /* ==============================
+           FORM
+        ============================== */
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+
+            color: #d1d5db;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border-radius: 10px;
+
+            border: 1px solid #292343;
+
+            background: #07051a;
+
+            color: white;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #00d9ff;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(0, 217, 255, 0.08);
+        }
+
+        input::placeholder {
+            color: #66617a;
+        }
+
+        select option {
+            background: #0b081e;
+            color: white;
+        }
+
+        /* ==============================
+           SERVICE FIELDS
+        ============================== */
+
+        .service-section {
+            display: none;
+
+            padding: 20px;
+
+            margin-bottom: 25px;
+
+            border-radius: 14px;
+
+            background: rgba(255, 255, 255, 0.025);
+
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .service-section-title {
+            font-size: 15px;
+
+            color: #00d9ff;
+
+            margin-bottom: 18px;
+        }
+
+        /* ==============================
+           AMOUNT
+        ============================== */
+
+        .amount-section {
+            margin-top: 10px;
+
+            padding-top: 25px;
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+        }
+
+        .amount-input {
+            position: relative;
+        }
+
+        .currency {
+            position: absolute;
+
+            left: 15px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #00d9ff;
+
+            font-weight: bold;
+        }
+
+        .amount-input input {
+            padding-left: 35px;
+        }
+
+        /* ==============================
+           BUTTON
+        ============================== */
+
+        .route-button {
+            width: 100%;
+
+            margin-top: 10px;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00d9ff,
+                    #7c3aed
+                );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0, 217, 255, 0.12);
+        }
+
+        .route-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(124, 58, 237, 0.25);
+        }
+
+        /* ==============================
+           ROUTING RESULT
+        ============================== */
+
+        .result-card {
+            margin-top: 30px;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            background: rgba(255, 255, 255, 0.025);
+
+            border: 1px solid rgba(0, 217, 255, 0.12);
+        }
+
+        .result-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .result-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 12px 0;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.05);
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: #9ca3af;
+        }
+
+        .result-value {
+            font-weight: 600;
+        }
+
+        .status {
+            color: #22c55e;
+        }
+
+        .risk {
+            color: #facc15;
+        }
+
+        /* ==============================
+           ERROR
+        ============================== */
+
+        .error {
+            margin-top: 20px;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            background: rgba(239, 68, 68, 0.08);
+
+            border: 1px solid rgba(239, 68, 68, 0.2);
+
+            color: #fca5a5;
+        }
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media (max-width: 650px) {
+
+            .router-card {
+                padding: 22px;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+
+            .service-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .result-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ==========================================
+         HEADER
+    =========================================== -->
+
+    <div class="header">
+
+        <h1>
+            🤖 AI Payment Router
+        </h1>
+
+        <p>
+            Secure, intelligent and risk-aware payment
+            orchestration
+        </p>
+
+    </div>
+
+
+    <!-- ==========================================
+         MAIN CARD
+    =========================================== -->
+
+    <div class="router-card">
+
+
+        <!-- ======================================
+             SELECTED SERVICE
+        ======================================= -->
+
+        <div class="service-header">
+
+            <div class="service-icon">
+
+                {% if selected_type == "MOBILE" %}
+                    📱
+
+                {% elif selected_type == "ELECTRICITY" %}
+                    💡
+
+                {% elif selected_type == "RENT" %}
+                    🏠
+
+                {% elif selected_type == "LOAN" %}
+                    💰
+
+                {% else %}
+                    🌐
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="service-info">
+
+                <h2>
+                    {{ selected_type_name }}
+                </h2>
+
+                <p>
+                    Enter the required payment details
+                    below.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ======================================
+             PAYMENT FORM
+        ======================================= -->
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            <!-- PAYMENT TYPE -->
+
+            <div class="form-group">
+
+                <label>
+                    Payment Service
+                </label>
+
+                <select
+                    name="payment_type"
+                    id="payment_type"
+                    required
+                >
+
+                    <option
+                        value="MOBILE"
+                        {% if selected_type == "MOBILE" %}
+                            selected
+                        {% endif %}
+                    >
+                        📱 Mobile Recharge
+                    </option>
+
+
+                    <option
+                        value="ELECTRICITY"
+                        {% if selected_type == "ELECTRICITY" %}
+                            selected
+                        {% endif %}
+                    >
+                        💡 Electricity Bill
+                    </option>
+
+
+                    <option
+                        value="RENT"
+                        {% if selected_type == "RENT" %}
+                            selected
+                        {% endif %}
+                    >
+                        🏠 Rent Payment
+                    </option>
+
+
+                    <option
+                        value="LOAN"
+                        {% if selected_type == "LOAN" %}
+                            selected
+                        {% endif %}
+                    >
+                        💰 Loan Repayment
+                    </option>
+
+
+                    <option
+                        value="OTHER"
+                        {% if selected_type == "OTHER" %}
+                            selected
+                        {% endif %}
+                    >
+                        🌐 Internet / Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ==================================
+                 MOBILE RECHARGE
+            =================================== -->
+
+            <div
+                class="service-section"
+                id="mobile-fields"
+            >
+
+                <div class="service-section-title">
+                    📱 Mobile Recharge Details
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Mobile Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        name="mobile_number"
+                        placeholder="Enter 10-digit mobile number"
+                        maxlength="10"
+                        pattern="[0-9]{10}"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Operator
+                    </label>
+
+                    <select name="mobile_operator">
+
+                        <option value="">
+                            Select Operator
+                        </option>
+
+                        <option value="Airtel">
+                            Airtel
+                        </option>
+
+                        <option value="Jio">
+                            Jio
+                        </option>
+
+                        <option value="Vi">
+                            Vi
+                        </option>
+
+                        <option value="BSNL">
+                            BSNL
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 ELECTRICITY
+            =================================== -->
+
+            <div
+                class="service-section"
+                id="electricity-fields"
+            >
+
+                <div class="service-section-title">
+                    💡 Electricity Bill Details
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Consumer Number
+                    </label>
+
+                    <input
+                        type="text"
+                        name="consumer_number"
+                        placeholder="Enter consumer number"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Electricity Provider
+                    </label>
+
+                    <input
+                        type="text"
+                        name="electricity_provider"
+                        placeholder="Enter provider name"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 RENT
+            =================================== -->
+
+            <div
+                class="service-section"
+                id="rent-fields"
+            >
+
+                <div class="service-section-title">
+                    🏠 Rent Payment Details
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Recipient / Landlord
+                    </label>
+
+                    <input
+                        type="text"
+                        name="rent_recipient"
+                        placeholder="Enter recipient name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Rent Reference
+                    </label>
+
+                    <input
+                        type="text"
+                        name="rent_reference"
+                        placeholder="Enter rent reference"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 LOAN
+            =================================== -->
+
+            <div
+                class="service-section"
+                id="loan-fields"
+            >
+
+                <div class="service-section-title">
+                    💰 Loan Repayment Details
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Loan Account Number
+                    </label>
+
+                    <input
+                        type="text"
+                        name="loan_account"
+                        placeholder="Enter loan account number"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Lender / Bank
+                    </label>
+
+                    <input
+                        type="text"
+                        name="loan_provider"
+                        placeholder="Enter lender name"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 OTHER
+            =================================== -->
+
+            <div
+                class="service-section"
+                id="other-fields"
+            >
+
+                <div class="service-section-title">
+                    🌐 Other Payment Details
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Payment Description
+                    </label>
+
+                    <input
+                        type="text"
+                        name="other_description"
+                        placeholder="Enter payment description"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 AMOUNT
+            =================================== -->
+
+            <div class="amount-section">
+
+                <div class="form-group">
+
+                    <label>
+                        Payment Amount
+                    </label>
+
+                    <div class="amount-input">
+
+                        <span class="currency">
+                            ₹
+                        </span>
+
+                        <input
+                            type="number"
+                            name="amount"
+                            step="0.01"
+                            min="1"
+                            placeholder="Enter amount"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 ROUTE PAYMENT
+            =================================== -->
+
+            <button
+                type="submit"
+                class="route-button"
+            >
+
+                🤖 Analyze & Route Payment
+
+            </button>
+
+        </form>
+
+
+        <!-- ======================================
+             ROUTING RESULT
+        ======================================= -->
+
+        {% if routing_result %}
+
+        <div class="result-card">
+
+            <div class="result-title">
+
+                🔐 AI Routing Result
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Payment Service
+                </span>
+
+                <span class="result-value">
+                    {{ routing_result.payment_type }}
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Amount
+                </span>
+
+                <span class="result-value">
+                    ₹{{ routing_result.amount }}
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Selected Bank
+                </span>
+
+                <span class="result-value">
+                    {{ routing_result.bank }}
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Status
+                </span>
+
+                <span class="result-value status">
+                    {{ routing_result.status }}
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Risk Level
+                </span>
+
+                <span class="result-value risk">
+                    {{ routing_result.risk }}
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Fraud Probability
+                </span>
+
+                <span class="result-value">
+                    {{ routing_result.fraud_probability }}%
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    AI Decision
+                </span>
+
+                <span class="result-value">
+                    {{ routing_result.reason }}
+                </span>
+
+            </div>
+
+
+            {% if routing_result.status == "ROUTE AVAILABLE" %}
+
+            <form
+                method="post"
+                action="{% url 'payment_pin' %}"
+            >
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="route-button"
+                >
+
+                    🔐 Continue to Payment PIN
+
+                </button>
+
+            </form>
+
+            {% endif %}
+
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     JAVASCRIPT
+=========================================== -->
+
+<script>
+
+    const paymentType =
+        document.getElementById('payment_type');
+
+
+    const sections = {
+
+        MOBILE:
+            document.getElementById(
+                'mobile-fields'
+            ),
+
+        ELECTRICITY:
+            document.getElementById(
+                'electricity-fields'
+            ),
+
+        RENT:
+            document.getElementById(
+                'rent-fields'
+            ),
+
+        LOAN:
+            document.getElementById(
+                'loan-fields'
+            ),
+
+        OTHER:
+            document.getElementById(
+                'other-fields'
+            )
+
+    };
+
+
+    function showServiceFields() {
+
+        /*
+         * Hide all service sections
+         */
+
+        Object.values(sections).forEach(
+            section => {
+
+                if (section) {
+
+                    section.style.display =
+                        'none';
+
+                }
+
+            }
+        );
+
+
+        /*
+         * Get selected service
+         */
+
+        const selected =
+            paymentType.value;
+
+
+        /*
+         * Show selected service
+         */
+
+        if (sections[selected]) {
+
+            sections[selected].style.display =
+                'block';
+
+        }
+
+    }
+
+
+    /*
+     * Change service
+     */
+
+    paymentType.addEventListener(
+        'change',
+        showServiceFields
+    );
+
+
+    /*
+     * Show correct section
+     * when page loads
+     */
+
+    showServiceFields();
+
+</script>
+
+</body>
+</html>

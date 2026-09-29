@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Payment History | MultiBank AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(124, 58, 237, 0.15),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(0, 217, 255, 0.10),
+                    transparent 30%
+                ),
+
+                #050018;
+
+            color: white;
+
+            padding-bottom: 60px;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+
+            height: 70px;
+
+            background: #0b081e;
+
+            border-bottom:
+                1px solid #241c48;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 40px;
+        }
+
+        .logo {
+
+            font-size: 22px;
+
+            font-weight: 800;
+        }
+
+        .logo span {
+
+            color: #00d9ff;
+        }
+
+        .back {
+
+            color: #aaa0bd;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back:hover {
+
+            color: #00d9ff;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+
+            width: 92%;
+
+            max-width: 1200px;
+
+            margin: 40px auto;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+
+            margin-bottom: 30px;
+        }
+
+        .badge {
+
+            display: inline-block;
+
+            padding: 7px 13px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(0, 217, 255, 0.08);
+
+            border:
+                1px solid
+                rgba(0, 217, 255, 0.25);
+
+            color: #00d9ff;
+
+            font-size: 12px;
+
+            margin-bottom: 15px;
+        }
+
+        h1 {
+
+            font-size: 36px;
+
+            margin-bottom: 10px;
+        }
+
+        h1 span {
+
+            color: #00d9ff;
+        }
+
+        .header p {
+
+            color: #9d98bd;
+
+            line-height: 1.6;
+        }
+
+        /* ================= SUMMARY ================= */
+
+        .summary {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+
+            background: #0b081e;
+
+            border:
+                1px solid #251c4a;
+
+            border-radius: 16px;
+
+            padding: 22px;
+        }
+
+        .summary-card small {
+
+            color: #9189a9;
+
+            font-size: 12px;
+        }
+
+        .summary-card h2 {
+
+            margin-top: 8px;
+
+            color: #00d9ff;
+
+            font-size: 26px;
+        }
+
+        /* ================= TABLE CARD ================= */
+
+        .card {
+
+            background:
+                rgba(11, 8, 30, 0.95);
+
+            border:
+                1px solid #251c4a;
+
+            border-radius: 20px;
+
+            padding: 25px;
+
+            overflow-x: auto;
+        }
+
+        .card-title {
+
+            font-size: 19px;
+
+            margin-bottom: 20px;
+        }
+
+        /* ================= TABLE ================= */
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 850px;
+        }
+
+        th {
+
+            text-align: left;
+
+            padding: 15px;
+
+            color: #817a9b;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            border-bottom:
+                1px solid #292344;
+        }
+
+        td {
+
+            padding: 18px 15px;
+
+            border-bottom:
+                1px solid #1d1934;
+
+            font-size: 14px;
+        }
+
+        tr:hover {
+
+            background:
+                rgba(0, 217, 255, 0.025);
+        }
+
+        /* ================= TRANSACTION ID ================= */
+
+        .transaction-id {
+
+            color: #00d9ff;
+
+            font-weight: 700;
+
+            font-size: 12px;
+
+            letter-spacing: 0.5px;
+        }
+
+        /* ================= PAYMENT TYPE ================= */
+
+        .payment-type {
+
+            color: #d8d2e5;
+
+            font-weight: 600;
+        }
+
+        /* ================= AMOUNT ================= */
+
+        .amount {
+
+            color: white;
+
+            font-weight: 700;
+
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .success {
+
+            color: #22c55e;
+
+            background:
+                rgba(34, 197, 94, 0.10);
+
+            border:
+                1px solid
+                rgba(34, 197, 94, 0.25);
+        }
+
+        .failed {
+
+            color: #ef4444;
+
+            background:
+                rgba(239, 68, 68, 0.10);
+
+            border:
+                1px solid
+                rgba(239, 68, 68, 0.25);
+        }
+
+        /* ================= DATE ================= */
+
+        .date {
+
+            color: #9992ad;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 70px 20px;
+        }
+
+        .empty-icon {
+
+            font-size: 55px;
+
+            margin-bottom: 20px;
+        }
+
+        .empty h3 {
+
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+
+            color: #8f899f;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+        }
+
+        .router-button {
+
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00d9ff,
+                    #7c3aed
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            font-size: 13px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 800px) {
+
+            .navbar {
+
+                padding: 0 20px;
+            }
+
+            .container {
+
+                width: 94%;
+            }
+
+            h1 {
+
+                font-size: 29px;
+            }
+
+            .summary {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        🤖 Multibank
+        <span>AI</span>
+
+    </div>
+
+    <a
+        href="{% url 'dashboard' %}"
+        class="back"
+    >
+
+        ← Back to Dashboard
+
+    </a>
+
+</nav>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="badge">
+
+            💳 PAYMENT HISTORY
+
+        </div>
+
+        <h1>
+
+            Transaction
+            <span>History</span>
+
+        </h1>
+
+        <p>
+
+            View and track your payments processed
+            through the MultiBank AI payment
+            orchestration system.
+
+        </p>
+
+    </div>
+
+
+    <!-- ================= SUMMARY ================= -->
+
+    <div class="summary">
+
+
+        <div class="summary-card">
+
+            <small>
+                TOTAL TRANSACTIONS
+            </small>
+
+            <h2>
+                {{ payments|length }}
+            </h2>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <small>
+                PAYMENT SYSTEM
+            </small>
+
+            <h2>
+                AI ROUTER
+            </h2>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <small>
+                SECURITY
+            </small>
+
+            <h2>
+                🛡️ ACTIVE
+            </h2>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= TRANSACTIONS ================= -->
+
+    <div class="card">
+
+        <div class="card-title">
+
+            Recent Transactions
+
+        </div>
+
+
+        {% if payments %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Transaction ID
+                    </th>
+
+                    <th>
+                        Payment Type
+                    </th>
+
+                    <th>
+                        Amount
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for payment in payments %}
+
+                <tr>
+
+
+                    <!-- TRANSACTION ID -->
+
+                    <td>
+
+                        <span class="transaction-id">
+
+                            {{ payment.transaction_id }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- PAYMENT TYPE -->
+
+                    <td>
+
+                        <span class="payment-type">
+
+                            {{ payment.get_payment_type_display }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- AMOUNT -->
+
+                    <td>
+
+                        <span class="amount">
+
+                            ₹{{ payment.amount|floatformat:2 }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        {% if payment.status == "SUCCESS" %}
+
+                            <span class="status success">
+
+                                ✓ SUCCESS
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="status failed">
+
+                                ✕ {{ payment.status }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- DATE -->
+
+                    <td>
+
+                        <span class="date">
+
+                            {{ payment.created_at|date:"d M Y" }}
+
+                            <br>
+
+                            {{ payment.created_at|date:"h:i A" }}
+
+                        </span>
+
+                    </td>
+
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        {% else %}
+
+
+        <!-- EMPTY STATE -->
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                💳
+            </div>
+
+            <h3>
+                No Transactions Yet
+            </h3>
+
+            <p>
+                Your completed payments will appear
+                here after you make a payment.
+            </p>
+
+            <a
+                href="{% url 'ai_router' %}"
+                class="router-button"
+            >
+
+                🚀 Make a Payment
+
+            </a>
+
+        </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

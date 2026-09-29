@@ -1,0 +1,680 @@
+/* =========================================================
+   MULTIBANK AI - DJANGO ADMIN THEME
+   ========================================================= */
+
+:root {
+    --mb-bg: #050018;
+    --mb-card: #0b081e;
+    --mb-card-light: #120d2b;
+    --mb-purple: #7c3aed;
+    --mb-purple-light: #a855f7;
+    --mb-cyan: #00d9ff;
+    --mb-text: #ffffff;
+    --mb-muted: #9f94b5;
+    --mb-border: rgba(139, 92, 246, 0.25);
+    --mb-success: #22c55e;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body {
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(124, 58, 237, 0.20),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(0, 217, 255, 0.10),
+            transparent 30%
+        ),
+        var(--mb-bg) !important;
+
+    color: var(--mb-text) !important;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif !important;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+#header {
+
+    background:
+        linear-gradient(
+            90deg,
+            #0b0520,
+            #12072d,
+            #08021a
+        ) !important;
+
+    color: white !important;
+
+    border-bottom:
+        1px solid
+        rgba(0, 217, 255, 0.20);
+
+    box-shadow:
+        0 5px 25px
+        rgba(0, 0, 0, 0.35);
+
+    min-height: 70px;
+
+    padding: 0 25px;
+}
+
+
+/* Site title */
+
+#site-name a {
+
+    color: white !important;
+
+    font-size: 24px !important;
+
+    font-weight: 800 !important;
+
+    text-decoration: none !important;
+}
+
+#site-name a::after {
+
+    content: " AI";
+
+    color: var(--mb-cyan);
+}
+
+
+/* User tools */
+
+#user-tools {
+
+    color: #c8c0d4 !important;
+
+    font-size: 12px !important;
+}
+
+#user-tools a {
+
+    color: var(--mb-cyan) !important;
+
+    text-decoration: none !important;
+}
+
+#user-tools a:hover {
+
+    color: white !important;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+#content {
+
+    background: transparent !important;
+
+    padding: 35px !important;
+}
+
+
+/* =========================================================
+   HEADINGS
+   ========================================================= */
+
+#content h1 {
+
+    color: white !important;
+
+    font-size: 28px !important;
+
+    font-weight: 700 !important;
+}
+
+#content h2 {
+
+    color: var(--mb-cyan) !important;
+
+    font-weight: 700 !important;
+}
+
+#content h3 {
+
+    color: white !important;
+}
+
+
+/* =========================================================
+   MODULE / CARDS
+   ========================================================= */
+
+.module {
+
+    background: var(--mb-card) !important;
+
+    border:
+        1px solid
+        var(--mb-border) !important;
+
+    border-radius: 14px !important;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0, 0, 0, 0.30);
+
+    margin-bottom: 25px;
+}
+
+
+/* Module headers */
+
+.module caption,
+.module h2 {
+
+    background:
+        linear-gradient(
+            90deg,
+            #160b34,
+            #0e0824
+        ) !important;
+
+    color: var(--mb-cyan) !important;
+
+    border-bottom:
+        1px solid
+        var(--mb-border);
+
+    padding: 14px 18px !important;
+
+    font-size: 14px !important;
+
+    font-weight: 700 !important;
+}
+
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
+#changelist table {
+
+    background: var(--mb-card) !important;
+
+    border:
+        1px solid
+        var(--mb-border) !important;
+
+    border-radius: 12px !important;
+
+    overflow: hidden;
+}
+
+
+#changelist table thead th {
+
+    background:
+        #120d2b !important;
+
+    color: var(--mb-cyan) !important;
+
+    border-bottom:
+        1px solid
+        var(--mb-border) !important;
+
+    padding: 13px !important;
+}
+
+
+#changelist table tbody tr {
+
+    background: #0b081e !important;
+
+    color: #e8e3ef !important;
+
+    transition: 0.2s ease;
+}
+
+
+#changelist table tbody tr:nth-child(2n) {
+
+    background: #09061a !important;
+}
+
+
+#changelist table tbody tr:hover {
+
+    background:
+        rgba(124, 58, 237, 0.13)
+        !important;
+}
+
+
+#changelist table td {
+
+    color: #ddd6e8 !important;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.05) !important;
+
+    padding: 13px !important;
+}
+
+
+/* Links inside tables */
+
+#changelist table a {
+
+    color: var(--mb-cyan) !important;
+
+    text-decoration: none !important;
+}
+
+#changelist table a:hover {
+
+    color: white !important;
+}
+
+
+/* =========================================================
+   DASHBOARD APP LIST
+   ========================================================= */
+
+#content-main .module table {
+
+    width: 100%;
+}
+
+
+#content-main .module table th {
+
+    color: white !important;
+
+    background: #120d2b !important;
+}
+
+
+#content-main .module table td {
+
+    background: #0b081e !important;
+
+    color: #ddd6e8 !important;
+}
+
+
+#content-main .module table tr:hover td {
+
+    background:
+        rgba(124, 58, 237, 0.12)
+        !important;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.button {
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--mb-purple),
+            var(--mb-cyan)
+        ) !important;
+
+    color: white !important;
+
+    border: none !important;
+
+    border-radius: 9px !important;
+
+    padding: 10px 18px !important;
+
+    font-weight: 700 !important;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.submit-row input:hover,
+a.button:hover {
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 22px
+        rgba(0, 217, 255, 0.18);
+}
+
+
+/* =========================================================
+   FORM INPUTS
+   ========================================================= */
+
+input,
+textarea,
+select {
+
+    background:
+        #050018 !important;
+
+    color:
+        white !important;
+
+    border:
+        1px solid
+        rgba(139, 92, 246, 0.30) !important;
+
+    border-radius:
+        8px !important;
+
+    padding:
+        9px !important;
+}
+
+
+input:focus,
+textarea:focus,
+select:focus {
+
+    border-color:
+        var(--mb-cyan) !important;
+
+    outline:
+        none !important;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(0, 217, 255, 0.10) !important;
+}
+
+
+/* =========================================================
+   FORM LABELS
+   ========================================================= */
+
+label {
+
+    color:
+        #c8c0d4 !important;
+
+    font-weight:
+        600 !important;
+}
+
+
+/* =========================================================
+   HELP TEXT
+   ========================================================= */
+
+.help,
+.helptext {
+
+    color:
+        var(--mb-muted) !important;
+}
+
+
+/* =========================================================
+   BREADCRUMBS
+   ========================================================= */
+
+.breadcrumbs {
+
+    background:
+        #0b081e !important;
+
+    color:
+        var(--mb-muted) !important;
+
+    border-bottom:
+        1px solid
+        var(--mb-border) !important;
+
+    padding:
+        12px 25px !important;
+}
+
+
+.breadcrumbs a {
+
+    color:
+        var(--mb-cyan) !important;
+}
+
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+.messagelist li {
+
+    border-radius:
+        10px !important;
+
+    margin-bottom:
+        10px !important;
+}
+
+
+/* =========================================================
+   RECENT ACTIONS
+   ========================================================= */
+
+#content-related {
+
+    background:
+        transparent !important;
+}
+
+
+#content-related .module {
+
+    background:
+        var(--mb-card) !important;
+
+    border:
+        1px solid
+        var(--mb-border) !important;
+
+    border-radius:
+        14px !important;
+}
+
+
+#content-related h2 {
+
+    color:
+        var(--mb-cyan) !important;
+
+    background:
+        #120d2b !important;
+}
+
+
+#content-related ul {
+
+    background:
+        #0b081e !important;
+}
+
+
+#content-related li {
+
+    color:
+        #c8c0d4 !important;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.05);
+}
+
+
+#content-related a {
+
+    color:
+        var(--mb-cyan) !important;
+}
+
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+
+.paginator {
+
+    background:
+        #0b081e !important;
+
+    color:
+        #c8c0d4 !important;
+
+    border:
+        1px solid
+        var(--mb-border) !important;
+
+    border-radius:
+        10px !important;
+
+    padding:
+        10px !important;
+}
+
+
+.paginator a {
+
+    color:
+        var(--mb-cyan) !important;
+}
+
+
+/* =========================================================
+   FILTER SIDEBAR
+   ========================================================= */
+
+#changelist-filter {
+
+    background:
+        #0b081e !important;
+
+    border-left:
+        1px solid
+        var(--mb-border) !important;
+
+    color:
+        #c8c0d4 !important;
+}
+
+
+#changelist-filter h2 {
+
+    background:
+        #120d2b !important;
+
+    color:
+        var(--mb-cyan) !important;
+}
+
+
+#changelist-filter h3 {
+
+    color:
+        white !important;
+}
+
+
+#changelist-filter a {
+
+    color:
+        #bdb5c9 !important;
+}
+
+
+#changelist-filter a:hover {
+
+    color:
+        var(--mb-cyan) !important;
+}
+
+
+/* =========================================================
+   SELECTED ROW
+   ========================================================= */
+
+tr.selected {
+
+    background:
+        rgba(124, 58, 237, 0.18)
+        !important;
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+   ========================================================= */
+
+.deletelink {
+
+    background:
+        #dc2626 !important;
+
+    color:
+        white !important;
+
+    border-radius:
+        8px !important;
+
+    padding:
+        9px 15px !important;
+}
+
+
+.deletelink:hover {
+
+    background:
+        #ef4444 !important;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+#footer {
+
+    background:
+        #050018 !important;
+
+    color:
+        #71687d !important;
+
+    border-top:
+        1px solid
+        rgba(139, 92, 246, 0.15);
+
+    padding:
+        20px !important;
+}

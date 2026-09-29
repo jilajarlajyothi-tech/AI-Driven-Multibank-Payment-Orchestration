@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Cache-Control"
+          content="no-cache, no-store, must-revalidate">
+
+    <meta http-equiv="Pragma"
+          content="no-cache">
+
+    <meta http-equiv="Expires"
+          content="0">
+
+    <title>MultiBank AI - Login</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================
+           BODY
+        ===================================== */
+
+        body {
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(0, 217, 255, 0.08),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(123, 44, 255, 0.10),
+                    transparent 30%
+                ),
+                #071426;
+
+            color: #ffffff;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================
+           BACKGROUND GLOW
+        ===================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            left: -250px;
+            bottom: -250px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(0, 217, 255, 0.12),
+                    transparent 70%
+                );
+
+            pointer-events: none;
+        }
+
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            right: -250px;
+            top: -250px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(123, 44, 255, 0.12),
+                    transparent 70%
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================
+           MAIN CONTAINER
+        ===================================== */
+
+        .login-container {
+
+            min-height: 100vh;
+
+            width: 100%;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 40px;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 430px;
+
+            gap: 70px;
+
+            align-items: center;
+
+            position: relative;
+
+            z-index: 1;
+        }
+
+
+        /* =====================================
+           LEFT SECTION
+        ===================================== */
+
+        .left-section {
+
+            padding: 20px;
+        }
+
+
+        /* =====================================
+           LOGO
+        ===================================== */
+
+        .logo-area {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 35px;
+        }
+
+
+        .logo {
+
+            width: 58px;
+
+            height: 58px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00D9FF,
+                    #7B2CFF
+                );
+
+            box-shadow:
+                0 0 25px
+                rgba(0, 217, 255, 0.25);
+
+            font-size: 22px;
+
+            font-weight: bold;
+        }
+
+
+        .brand-name {
+
+            font-size: 26px;
+
+            font-weight: 700;
+        }
+
+
+        .brand-subtitle {
+
+            color: #00D9FF;
+
+            font-size: 10px;
+
+            letter-spacing: 2px;
+
+            margin-top: 5px;
+        }
+
+
+        /* =====================================
+           HEADING
+        ===================================== */
+
+        .main-heading {
+
+            font-size: 48px;
+
+            line-height: 1.15;
+
+            margin-bottom: 20px;
+        }
+
+
+        .main-heading span {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00D9FF,
+                    #7B2CFF
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .description {
+
+            color: #A7A3C2;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+
+            max-width: 550px;
+
+            margin-bottom: 35px;
+        }
+
+
+        /* =====================================
+           BANK FLOW
+        ===================================== */
+
+        .bank-flow {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .bank-box {
+
+            background:
+                rgba(11, 8, 30, 0.85);
+
+            border: 1px solid #263653;
+
+            border-radius: 12px;
+
+            padding: 14px 18px;
+
+            text-align: center;
+
+            min-width: 105px;
+        }
+
+
+        .bank-icon {
+
+            font-size: 23px;
+
+            color: #00D9FF;
+
+            margin-bottom: 6px;
+        }
+
+
+        .bank-name {
+
+            color: #DAD8E8;
+
+            font-size: 12px;
+        }
+
+
+        .ai-router {
+
+            border-color: #00D9FF;
+
+            box-shadow:
+                0 0 18px
+                rgba(0, 217, 255, 0.10);
+        }
+
+
+        .arrow {
+
+            color: #00D9FF;
+
+            font-size: 22px;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================
+           LOGIN CARD
+        ===================================== */
+
+        .login-card {
+
+            background: #0B081E;
+
+            border: 1px solid #263653;
+
+            border-radius: 22px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.35),
+
+                0 0 40px
+                rgba(0, 217, 255, 0.04);
+        }
+
+
+        .card-title {
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .card-subtitle {
+
+            color: #A7A3C2;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            margin-bottom: 28px;
+        }
+
+
+        /* =====================================
+           DJANGO MESSAGES
+        ===================================== */
+
+        .messages {
+
+            margin-bottom: 20px;
+        }
+
+
+        .message {
+
+            background: #15152B;
+
+            border: 1px solid #343452;
+
+            color: #ffffff;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+        }
+
+
+        /* =====================================
+           FORM
+        ===================================== */
+
+        .form-group {
+
+            margin-bottom: 19px;
+        }
+
+
+        label {
+
+            display: block;
+
+            color: #E5E3EF;
+
+            font-size: 13px;
+
+            font-weight: 500;
+
+            margin-bottom: 8px;
+        }
+
+
+        input {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            background: #080F1D;
+
+            border: 1px solid #263653;
+
+            border-radius: 9px;
+
+            color: #ffffff;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.25s ease;
+        }
+
+
+        input::placeholder {
+
+            color: #626B7D;
+        }
+
+
+        input:focus {
+
+            border-color: #00D9FF;
+
+            box-shadow:
+                0 0 0 2px
+                rgba(0, 217, 255, 0.08);
+        }
+
+
+        /* =====================================
+           FORGOT PASSWORD
+        ===================================== */
+
+        .forgot {
+
+            text-align: right;
+
+            margin-top: -5px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .forgot a {
+
+            color: #00D9FF;
+
+            font-size: 13px;
+
+            text-decoration: none;
+        }
+
+
+        .forgot a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =====================================
+           LOGIN BUTTON
+        ===================================== */
+
+        .login-btn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00D9FF,
+                    #7B2CFF
+                );
+
+            color: #ffffff;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s ease;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0, 217, 255, 0.12);
+        }
+
+
+        .login-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 217, 255, 0.25);
+        }
+
+
+        /* =====================================
+           REGISTER LINK
+        ===================================== */
+
+        .register-text {
+
+            text-align: center;
+
+            color: #A7A3C2;
+
+            font-size: 13px;
+
+            margin-top: 22px;
+        }
+
+
+        .register-text a {
+
+            color: #00D9FF;
+
+            font-weight: 600;
+
+            text-decoration: none;
+        }
+
+
+        .register-text a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =====================================
+           SECURITY
+        ===================================== */
+
+        .security {
+
+            text-align: center;
+
+            color: #687286;
+
+            font-size: 11px;
+
+            margin-top: 20px;
+        }
+
+
+        .security span {
+
+            color: #00D9FF;
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 900px) {
+
+            .login-container {
+
+                grid-template-columns: 1fr;
+
+                max-width: 500px;
+
+                gap: 25px;
+            }
+
+
+            .left-section {
+
+                text-align: center;
+            }
+
+
+            .logo-area {
+
+                justify-content: center;
+            }
+
+
+            .description {
+
+                margin-left: auto;
+
+                margin-right: auto;
+            }
+
+
+            .bank-flow {
+
+                justify-content: center;
+            }
+
+
+            .main-heading {
+
+                font-size: 38px;
+            }
+        }
+
+
+        @media (max-width: 500px) {
+
+            .login-container {
+
+                padding: 20px;
+            }
+
+
+            .login-card {
+
+                padding: 28px 22px;
+            }
+
+
+            .main-heading {
+
+                font-size: 32px;
+            }
+
+
+            .arrow {
+
+                display: none;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-container">
+
+
+    <!-- =====================================
+         LEFT SIDE
+    ====================================== -->
+
+    <div class="left-section">
+
+
+        <div class="logo-area">
+
+            <div class="logo">
+                AI
+            </div>
+
+
+            <div>
+
+                <div class="brand-name">
+                    MultiBank AI
+                </div>
+
+                <div class="brand-subtitle">
+                    AI-DRIVEN PAYMENT ORCHESTRATION
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <h1 class="main-heading">
+
+            Smarter payments.
+            <br>
+
+            <span>One platform.</span>
+
+        </h1>
+
+
+        <p class="description">
+
+            Securely access your AI-powered payment
+            orchestration platform and manage intelligent
+            transactions across multiple banking networks.
+
+        </p>
+
+
+        <!-- BANK FLOW -->
+
+        <div class="bank-flow">
+
+
+            <div class="bank-box">
+
+                <div class="bank-icon">
+                    🏦
+                </div>
+
+                <div class="bank-name">
+                    Bank A
+                </div>
+
+            </div>
+
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="bank-box ai-router">
+
+                <div class="bank-icon">
+                    ✦
+                </div>
+
+                <div class="bank-name">
+                    AI Router
+                </div>
+
+            </div>
+
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="bank-box">
+
+                <div class="bank-icon">
+                    🏦
+                </div>
+
+                <div class="bank-name">
+                    Bank B
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         LOGIN CARD
+    ====================================== -->
+
+    <div class="login-card">
+
+
+        <h2 class="card-title">
+            Welcome Back
+        </h2>
+
+
+        <p class="card-subtitle">
+
+            Sign in to your MultiBank AI account
+            to continue.
+
+        </p>
+
+
+        <!-- DJANGO MESSAGES -->
+
+        {% if messages %}
+
+            <div class="messages">
+
+                {% for message in messages %}
+
+                    <div class="message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- LOGIN FORM -->
+
+        <form method="POST"
+              id="loginForm"
+              autocomplete="off">
+
+            {% csrf_token %}
+
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your username"
+                    autocomplete="off"
+                    autocapitalize="none"
+                    spellcheck="false"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="new-password"
+                    required
+                >
+
+            </div>
+
+
+            <!-- FORGOT PASSWORD -->
+
+            <div class="forgot">
+
+                
+              <a href="{% url 'forgot_password' %}" class="forgot-link">
+                 Forgot Password?
+                 </a>
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                Login
+            </button>
+
+
+        </form>
+
+
+        <!-- REGISTER LINK -->
+
+        <div class="register-text">
+
+            Don't have an account?
+
+            <a href="{% url 'register' %}">
+                Create Account
+            </a>
+
+        </div>
+
+
+        <!-- SECURITY -->
+
+        <div class="security">
+
+            <span>🔒</span>
+
+            Secure & encrypted login
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================
+     CLEAR LOGIN FIELDS
+====================================== -->
+
+<script>
+
+    function clearLoginFields() {
+
+        const username =
+            document.getElementById("username");
+
+        const password =
+            document.getElementById("password");
+
+        if (username) {
+            username.value = "";
+        }
+
+        if (password) {
+            password.value = "";
+        }
+    }
+
+
+    /*
+       Clear fields when page is loaded
+    */
+
+    window.addEventListener(
+        "load",
+        function () {
+            clearLoginFields();
+        }
+    );
+
+
+    /*
+       Clear fields when returning
+       using browser Back button
+    */
+
+    window.addEventListener(
+        "pageshow",
+        function () {
+            clearLoginFields();
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

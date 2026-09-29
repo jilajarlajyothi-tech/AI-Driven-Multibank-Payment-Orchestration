@@ -1,0 +1,2160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Multibank AI | Dashboard</title>
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #090817;
+            color: #ffffff;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* =====================================================
+           TOP NAVIGATION
+        ===================================================== */
+
+        .top-navigation {
+
+            width: 100%;
+
+            background: #111022;
+
+            border-bottom: 1px solid #27243e;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+
+        .nav-container {
+
+            width: 100%;
+
+            min-height: 76px;
+
+            padding: 0 30px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .logo {
+
+            font-size: 24px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+
+            margin-right: 5px;
+        }
+
+
+        .logo-main {
+            color: #ffffff;
+        }
+
+
+        .logo-ai {
+            color: #38bdf8;
+        }
+
+
+        /* =====================================================
+           NAVIGATION MENU
+        ===================================================== */
+
+        .nav-menu {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 4px;
+
+            flex: 1;
+
+            overflow-x: auto;
+
+            scrollbar-width: none;
+        }
+
+
+        .nav-menu::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        .nav-link {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #aaa5c2;
+
+            padding: 11px 12px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            white-space: nowrap;
+
+            transition: 0.25s;
+
+            cursor: pointer;
+        }
+
+
+        .nav-link:hover {
+
+            color: #ffffff;
+
+            background: #211d3a;
+        }
+
+
+        .nav-link.active {
+
+            background: #7200ff;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 4px 15px rgba(114, 0, 255, 0.30);
+        }
+
+
+        .nav-icon {
+
+            font-size: 16px;
+
+            line-height: 1;
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .nav-profile {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            white-space: nowrap;
+
+            margin-left: auto;
+        }
+
+
+        .profile-circle {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 50%;
+
+            background: #6500f5;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            color: white;
+        }
+
+
+        .profile-info {
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .profile-name {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: #ffffff;
+        }
+
+
+        .profile-role {
+
+            font-size: 10px;
+
+            color: #77728e;
+
+            margin-top: 3px;
+        }
+        .nav-profile-photo {
+    width: 42px !important;
+    height: 42px !important;
+
+    min-width: 42px !important;
+    min-height: 42px !important;
+
+    max-width: 42px !important;
+    max-height: 42px !important;
+
+    display: block !important;
+
+    object-fit: cover !important;
+
+    border-radius: 50% !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+}
+
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .main {
+
+            width: 100%;
+
+            padding: 35px 30px 70px;
+        }
+
+
+        /* =====================================================
+           WELCOME SECTION
+        ===================================================== */
+
+        .dashboard-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 30px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .welcome h1 {
+
+            font-size: 29px;
+
+            margin-bottom: 7px;
+
+            color: #ffffff;
+        }
+
+
+        .welcome p {
+
+            color: #9691ad;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        .search-box {
+
+            width: 300px;
+
+            padding: 12px 16px;
+
+            background: #17152b;
+
+            border: 1px solid #2b2844;
+
+            border-radius: 9px;
+
+            color: #ffffff;
+
+            outline: none;
+
+            font-size: 13px;
+        }
+
+
+        .search-box::placeholder {
+
+            color: #656078;
+        }
+
+
+        .search-box:focus {
+
+            border-color: #7200ff;
+
+            box-shadow:
+                0 0 0 2px rgba(114, 0, 255, 0.12);
+        }
+
+
+        /* =====================================================
+           BALANCE CARDS
+        ===================================================== */
+
+        .balance-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 35px;
+        }
+
+
+        .balance-card {
+
+            background: #111022;
+
+            border: 1px solid #27243e;
+
+            border-radius: 13px;
+
+            padding: 23px;
+
+            transition: 0.25s;
+        }
+
+
+        .balance-card:hover {
+
+            transform: translateY(-3px);
+
+            border-color: #403b63;
+        }
+
+
+        .balance-title {
+
+            color: #8e89a7;
+
+            font-size: 13px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .balance-value {
+
+            font-size: 25px;
+
+            font-weight: 700;
+        }
+
+
+        .balance-blue {
+            color: #38bdf8;
+        }
+
+
+        .balance-orange {
+            color: #f59e0b;
+        }
+
+
+        .balance-green {
+            color: #22c55e;
+        }
+
+
+        .balance-purple {
+            color: #a855f7;
+        }
+
+
+        /* =====================================================
+           SERVICE SECTION
+        ===================================================== */
+
+        .service-section {
+
+            margin-top: 30px;
+
+            padding-bottom: 30px;
+
+            border-bottom: 1px solid #252238;
+        }
+
+
+        .service-section:last-of-type {
+
+            border-bottom: none;
+        }
+
+
+        .service-title {
+
+            font-size: 21px;
+
+            font-weight: 700;
+
+            margin-bottom: 18px;
+
+            color: #ffffff;
+        }
+
+
+        /* =====================================================
+           SERVICE GRID
+        ===================================================== */
+
+        .service-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 16px;
+        }
+
+
+        /* =====================================================
+           SERVICE CARD
+        ===================================================== */
+
+        .service-item {
+
+            min-height: 135px;
+
+            background: #19172a;
+
+            border: 1px solid #353149;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            color: #ffffff;
+
+            transition: all 0.25s ease;
+
+            cursor: pointer;
+        }
+
+
+        .service-item:hover {
+
+            background: #24203a;
+
+            border-color: #7c3aed;
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 8px 25px rgba(109, 0, 255, 0.15);
+        }
+
+
+        .service-icon {
+
+            width: 62px;
+
+            height: 62px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 38px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .service-name {
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            line-height: 1.35;
+
+            color: #f5f3ff;
+        }
+
+
+        /* =====================================================
+           LOWER DASHBOARD
+        ===================================================== */
+
+        .lower-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 0.8fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+
+        /* =====================================================
+           PANEL
+        ===================================================== */
+
+        .panel {
+
+            background: #111022;
+
+            border: 1px solid #27243e;
+
+            border-radius: 14px;
+
+            padding: 23px;
+        }
+
+
+        .panel-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+
+        .panel-header h2 {
+
+            font-size: 19px;
+
+            color: #ffffff;
+        }
+
+
+        .view-all {
+
+            color: #38bdf8;
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           TRANSACTIONS
+        ===================================================== */
+
+        .transaction-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid #252238;
+        }
+
+
+        .transaction-row:last-child {
+
+            border-bottom: none;
+        }
+
+
+        .transaction-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .transaction-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            border-radius: 10px;
+
+            background: #201e32;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+        }
+
+
+        .transaction-name {
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #ffffff;
+        }
+
+
+        .transaction-date {
+
+            color: #68637d;
+
+            font-size: 11px;
+
+            margin-top: 4px;
+        }
+
+
+        .debit {
+
+            color: #f87171;
+
+            font-weight: 700;
+        }
+
+
+        .credit {
+
+            color: #22c55e;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           AI ROUTER
+        ===================================================== */
+
+        .ai-card {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #26005c,
+                    #15002f
+                );
+
+            border: 1px solid #6d00ff;
+
+            border-radius: 14px;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .ai-card h2 {
+
+            font-size: 19px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .ai-card p {
+
+            color: #c6bfdc;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            margin-bottom: 18px;
+        }
+
+
+        .ai-status {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #4ade80;
+
+            font-size: 12px;
+        }
+
+
+        .status-dot {
+
+            width: 8px;
+
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+        }
+
+
+        /* =====================================================
+           CREDIT SCORE
+        ===================================================== */
+
+        .score {
+
+            font-size: 43px;
+
+            font-weight: 700;
+
+            color: #38bdf8;
+
+            margin-top: 10px;
+        }
+
+
+        .score-label {
+
+            color: #88839e;
+
+            font-size: 13px;
+        }
+
+
+        .score-bar {
+
+            width: 100%;
+
+            height: 8px;
+
+            background: #302c43;
+
+            border-radius: 10px;
+
+            margin: 20px 0 10px;
+
+            overflow: hidden;
+        }
+
+
+        .score-progress {
+
+            width: 78%;
+
+            height: 100%;
+
+            background: #22c55e;
+
+            border-radius: 10px;
+        }
+
+
+        .updated {
+
+            color: #68637d;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE - TABLET
+        ===================================================== */
+
+        @media (max-width: 1200px) {
+
+            .nav-container {
+
+                padding: 0 18px;
+            }
+
+
+            .nav-link {
+
+                padding: 10px 9px;
+            }
+
+
+            .nav-link {
+
+                font-size: 12px;
+            }
+
+
+            .balance-grid {
+
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+
+            .service-grid {
+
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE - SMALL TABLET
+        ===================================================== */
+
+        @media (max-width: 950px) {
+
+            .nav-container {
+
+                min-height: auto;
+
+                padding: 14px 18px;
+
+                flex-wrap: wrap;
+            }
+
+
+            .nav-menu {
+
+                order: 3;
+
+                flex-basis: 100%;
+
+                padding-bottom: 4px;
+            }
+
+
+            .nav-profile {
+
+                margin-left: auto;
+            }
+
+
+            .dashboard-top {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .search-box {
+
+                width: 100%;
+            }
+
+
+            .lower-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .service-grid {
+
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE - MOBILE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            .main {
+
+                padding: 25px 15px 50px;
+            }
+
+
+            .logo {
+
+                font-size: 20px;
+            }
+
+
+            .profile-info {
+
+                display: none;
+            }
+
+
+            .balance-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .service-grid {
+
+                grid-template-columns: repeat(2, 1fr);
+
+                gap: 12px;
+            }
+
+
+            .service-item {
+
+                min-height: 120px;
+            }
+
+
+            .service-icon {
+
+                font-size: 32px;
+            }
+
+
+            .service-name {
+
+                font-size: 13px;
+            }
+
+
+            .welcome h1 {
+
+                font-size: 24px;
+            }
+
+
+            .nav-menu {
+
+                gap: 2px;
+            }
+
+
+            .nav-link {
+
+                padding: 9px 10px;
+
+                font-size: 12px;
+            }
+            /* your existing CSS */
+
+.credit-score-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #00D9FF, #7C3AED);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.credit-score-btn:hover {
+    opacity: 0.85;
+}
+
+/* ================================
+   BANK ACCOUNT OVERVIEW
+================================ */
+
+.bank-overview {
+    margin-top: 28px;
+    margin-bottom: 28px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.section-header h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 22px;
+}
+
+.section-header p {
+    margin-top: 5px;
+    color: #8f89a3;
+    font-size: 13px;
+}
+
+.view-all-btn {
+    text-decoration: none;
+    color: #00D9FF;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.view-all-btn:hover {
+    color: #ffffff;
+}
+
+
+/* SUMMARY */
+
+.bank-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.bank-summary-card {
+    background: #0B081E;
+    border: 1px solid #21183D;
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.summary-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(0, 217, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+}
+
+.bank-summary-card small {
+    color: #8f89a3;
+    font-size: 12px;
+}
+
+.bank-summary-card h3 {
+    margin: 5px 0 0;
+    color: #ffffff;
+    font-size: 21px;
+}
+
+
+/* BANK CARDS */
+
+.bank-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.bank-card {
+    background: linear-gradient(
+        145deg,
+        #0B081E,
+        #110A29
+    );
+
+    border: 1px solid #21183D;
+    border-radius: 20px;
+    padding: 20px;
+
+    transition: 0.25s ease;
+}
+
+.bank-card:hover {
+    transform: translateY(-4px);
+    border-color: #00D9FF;
+    box-shadow: 0 10px 35px rgba(0, 217, 255, 0.08);
+}
+
+.bank-card-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bank-logo {
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+
+    background: linear-gradient(
+        135deg,
+        #00D9FF,
+        #7C3AED
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+}
+
+.bank-card h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.account-number {
+    display: block;
+    margin-top: 4px;
+    color: #77708b;
+    font-size: 12px;
+}
+
+.status {
+    margin-left: auto;
+    font-size: 11px;
+}
+
+.status.active {
+    color: #22c55e;
+}
+
+.status.inactive {
+    color: #ef4444;
+}
+
+.bank-balance {
+    margin-top: 28px;
+}
+
+.bank-balance small {
+    color: #77708b;
+    font-size: 12px;
+}
+
+.bank-balance strong {
+    display: block;
+    margin-top: 6px;
+    color: #ffffff;
+    font-size: 25px;
+}
+
+
+/* EMPTY STATE */
+
+.empty-bank {
+    grid-column: 1 / -1;
+
+    text-align: center;
+    padding: 45px;
+
+    background: #0B081E;
+    border: 1px dashed #30264D;
+    border-radius: 18px;
+}
+
+.empty-bank div {
+    font-size: 40px;
+}
+
+.empty-bank h3 {
+    color: #ffffff;
+}
+
+.empty-bank p {
+    color: #8f89a3;
+}
+
+.empty-bank a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 11px 18px;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        90deg,
+        #00D9FF,
+        #7C3AED
+    );
+
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .bank-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .bank-summary {
+        grid-template-columns: 1fr;
+    }
+}
+.user-profile-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.user-profile-link .user-info {
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.user-profile-link:hover .user-name {
+    color: #00D9FF;
+}
+
+.user-profile-link:hover .user-avatar {
+    transform: scale(1.05);
+}
+.nav-profile-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     TOP NAVIGATION
+========================================================= -->
+
+<nav class="top-navigation">
+
+
+    <div class="nav-container">
+
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <span class="logo-main">
+                Multibank
+            </span>
+
+            <span class="logo-ai">
+                AI
+            </span>
+
+        </div>
+
+
+        <!-- =================================================
+             NAVIGATION MENU
+        ================================================= -->
+
+        <div class="nav-menu">
+
+
+            <!-- DASHBOARD -->
+
+            <a href="{% url 'dashboard' %}"
+               class="nav-link active">
+
+                <span class="nav-icon">🏠</span>
+
+                Dashboard
+
+            </a>
+
+
+
+            <!-- PAYMENTS -->
+
+            <a href="{% url 'payments' %}" class="nav-link">
+
+                <span class="nav-icon">💳</span>
+
+                Payments
+
+            </a>
+
+
+            <!-- BANK ACCOUNTS -->
+
+            <a href="{% url 'bank_accounts' %}" class="nav-link">
+
+                <span class="nav-icon">🏦</span>
+
+                Bank Accounts
+
+            </a>
+
+
+            <!-- AI ROUTER -->
+
+            <a href="{% url 'ai_router' %}" class="nav-link">
+
+                <span class="nav-icon">🤖</span>
+
+                AI Router
+
+            </a>
+
+
+            <!-- RISK & COMPLIANCE -->
+
+            <a href="#"
+               class="nav-link">
+
+                <span class="nav-icon">🛡️</span>
+
+                Risk & Compliance
+
+            </a>
+
+
+            <!-- RECHARGE & BILLS -->
+
+            <a href="{% url 'recharge_bills' %}" class="nav-link">
+                <span class="nav-icon">📱</span>
+
+                Recharge & Bills
+
+            </a>
+
+
+            <!-- ADMIN -->
+
+            <a href="#"
+               class="nav-link">
+
+                <span class="nav-icon">⚙️</span>
+
+                Admin
+
+            </a>
+
+
+        </div>
+
+
+        <!-- =================================================
+             USER PROFILE
+        ================================================= -->
+       <a href="{% url 'my_profile' %}" class="user-profile-link">
+
+    <div class="nav-profile">
+
+        <div class="profile-circle">
+
+            {% if request.user.profile_photo %}
+
+                <img
+                    src="{{ request.user.profile_photo.url }}"
+                    alt="Profile Photo"
+                    class="nav-profile-photo"
+                >
+
+            {% else %}
+
+                {{ request.user.username|first|upper }}
+
+            {% endif %}
+
+        </div>
+
+        <div class="profile-info">
+
+            <div class="profile-name">
+                {{ request.user.username }}
+            </div>
+
+            <div class="profile-role">
+                User
+            </div>
+
+        </div>
+
+    </div>
+
+</a>
+</nav>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- =====================================================
+         WELCOME
+    ===================================================== -->
+
+    <div class="dashboard-top">
+
+
+        <div class="welcome">
+
+            <h1>
+                Good Morning, {{ request.user.username }} 👋
+            </h1>
+
+            <p>
+                Manage your payments, accounts and financial
+                services from one secure platform.
+            </p>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <input
+            type="text"
+            class="search-box"
+            placeholder="Search payments, services..."
+        >
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         BALANCE CARDS
+    ===================================================== -->
+
+    <div class="balance-grid">
+
+
+        <!-- TOTAL BALANCE -->
+
+        <div class="balance-card">
+
+            <div class="balance-title">
+                Total Balance
+            </div>
+
+            <h2 class="balance-amount">₹{{ total_balance|floatformat:2 }}</h2>
+
+        </div>
+
+
+        <!-- MONTH SPENT -->
+
+        <div class="balance-card">
+
+            <div class="balance-title">
+                This Month Spent
+            </div>
+
+            <div class="balance-value balance-orange">
+                ₹{{ this_month_spent|floatformat:2 }}
+            </div>
+
+        </div>
+
+
+        <!-- CASHBACK -->
+
+        <div class="balance-card">
+
+            <div class="balance-title">
+                Cashback Earned
+            </div>
+
+            <div class="balance-value balance-green">
+                ₹{{ cashback_earned|floatformat:2 }}
+            </div>
+
+        </div>
+
+
+        <!-- REWARDS -->
+
+        <div class="balance-card">
+
+            <div class="balance-title">
+                Rewards Points
+            </div>
+
+            <div class="balance-value balance-purple">
+                {{ reward_points }}
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         RECHARGE & BILLS
+    ===================================================== -->
+
+    <div class="service-section">
+
+
+        <div class="service-title">
+            Recharge & Bills
+        </div>
+
+
+        <div class="service-grid">
+
+
+            <!-- MOBILE RECHARGE -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    📱
+                </div>
+
+                <div class="service-name">
+                    Mobile<br>Recharge
+                </div>
+
+            </a>
+
+
+            <!-- RENT -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    🏠
+                </div>
+
+                <div class="service-name">
+                    Rent via<br>Credit Card
+                </div>
+
+            </a>
+
+
+            <!-- ELECTRICITY -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    💡
+                </div>
+
+                <div class="service-name">
+                    Electricity<br>Bill
+                </div>
+
+            </a>
+
+
+            <!-- LOAN REPAYMENT -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    💰
+                </div>
+
+                <div class="service-name">
+                    Loan<br>Repayment
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         LOANS
+    ===================================================== -->
+
+    <div class="service-section">
+
+
+        <div class="service-title">
+            Loans
+        </div>
+
+
+        <div class="service-grid">
+
+
+            <!-- PERSONAL LOAN -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    👤
+                </div>
+
+                <div class="service-name">
+                    Personal<br>Loan
+                </div>
+
+            </a>
+
+
+            <!-- MUTUAL FUNDS LOAN -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    📊
+                </div>
+
+                <div class="service-name">
+                    Mutual<br>Funds Loan
+                </div>
+
+            </a>
+
+
+            <!-- GOLD LOAN -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    🪙
+                </div>
+
+                <div class="service-name">
+                    Gold<br>Loan
+                </div>
+
+            </a>
+
+
+            <!-- CREDIT SCORE -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    📈
+                </div>
+
+                <div class="service-name">
+                    Credit<br>Score
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         INSURANCE
+    ===================================================== -->
+
+    <div class="service-section">
+
+
+        <div class="service-title">
+            Insurance
+        </div>
+
+
+        <div class="service-grid">
+
+
+            <!-- BIKE -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    🏍️
+                </div>
+
+                <div class="service-name">
+                    Bike<br>Insurance
+                </div>
+
+            </a>
+
+
+            <!-- CAR -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    🚗
+                </div>
+
+                <div class="service-name">
+                    Car<br>Insurance
+                </div>
+
+            </a>
+
+
+            <!-- HEALTH -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    ❤️
+                </div>
+
+                <div class="service-name">
+                    Health<br>Insurance
+                </div>
+
+            </a>
+
+
+            <!-- LIFE -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    🛡️
+                </div>
+
+                <div class="service-name">
+                    Life<br>Insurance
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         BENEFITS
+    ===================================================== -->
+
+    <div class="service-section">
+
+
+        <div class="service-title">
+            Benefits
+        </div>
+
+
+        <div class="service-grid">
+
+
+            <!-- REWARDS -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    🎁
+                </div>
+
+                <div class="service-name">
+                    Rewards
+                </div>
+
+            </a>
+
+
+            <!-- OFFERS -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    🏷️
+                </div>
+
+                <div class="service-name">
+                    Offers
+                </div>
+
+            </a>
+
+
+            <!-- SUBSCRIPTIONS -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    🔄
+                </div>
+
+                <div class="service-name">
+                    Subscriptions
+                </div>
+
+            </a>
+
+
+            <!-- SCRATCH CARDS -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    🎟️
+                </div>
+
+                <div class="service-name">
+                    Scratch<br>Cards
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         OTHER SERVICES
+    ===================================================== -->
+
+    <div class="service-section">
+
+
+        <div class="service-title">
+            Other Services
+        </div>
+
+
+        <div class="service-grid">
+
+
+            <!-- SHARE & EARN -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    🤝
+                </div>
+
+                <div class="service-name">
+                    Share &<br>Earn
+                </div>
+
+            </a>
+
+
+            <!-- AUTO PAY -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    ⚡
+                </div>
+
+                <div class="service-name">
+                    Auto<br>Pay
+                </div>
+
+            </a>
+
+
+            <!-- TRAVEL -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    ✈️
+                </div>
+
+                <div class="service-name">
+                    Travel
+                </div>
+
+            </a>
+
+
+            <!-- PAYMENTS -->
+
+            <a href="#"
+               class="service-item">
+
+                <div class="service-icon">
+                    💳
+                </div>
+
+                <div class="service-name">
+                    Payments
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         LOWER DASHBOARD
+    ===================================================== -->
+
+    <div class="lower-grid">
+
+
+        <!-- =================================================
+             RECENT TRANSACTIONS
+        ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-header">
+
+                <h2>
+                    Recent Transactions
+                </h2>
+
+
+                <a href="#"
+                   class="view-all">
+
+                    View All
+
+                </a>
+
+            </div>
+
+
+          <!-- DYNAMIC TRANSACTIONS -->
+
+<div class="transactions-list">
+
+    {% for payment in recent_payments %}
+
+    <div class="transaction-row">
+
+        <div class="transaction-info">
+
+            <div class="transaction-icon">
+                💳
+            </div>
+
+            <div>
+                <div class="transaction-name">
+                    {{ payment.get_payment_type_display }}
+                </div>
+
+                <div class="transaction-description">
+                    {{ payment.description }}
+                </div>
+
+                <div class="transaction-date">
+                    {{ payment.created_at|date:"d M Y, h:i A" }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="transaction-amount-section">
+
+            <div class="transaction-amount">
+                -₹{{ payment.amount|floatformat:2 }}
+            </div>
+
+            <div class="transaction-status">
+                {{ payment.status }}
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="no-transactions">
+        No transactions yet.
+    </div>
+
+    {% endfor %}
+
+</div>
+</div>
+
+
+        <!-- =================================================
+             RIGHT SIDE
+        ================================================= -->
+
+        <div>
+
+
+            <!-- AI PAYMENT ROUTER -->
+
+            <div class="ai-card">
+
+
+                <h2>
+                    🤖 AI Payment Router
+                </h2>
+
+
+                <p>
+
+                    Our intelligent routing system selects
+                    the appropriate banking route for your
+                    transaction based on availability,
+                    cost and risk signals.
+
+                </p>
+
+
+                <a href="{% url 'ai_router' %}">
+                    Open Router →
+              </a>
+
+
+
+            </div>
+
+
+            <!-- CREDIT SCORE -->
+
+            <a href="{% url 'credit_score' %}" class="panel credit-score-link">
+
+
+                <div class="panel-header">
+
+                    <h2>
+                        Credit Score
+                    </h2>
+
+                </div>
+
+
+                <div class="score">
+                    {{ credit_score }}
+                </div>
+
+            
+                <div class="score-label">
+                    CIBIL Score
+                </div>
+                <div class="score-progress">
+    <div class="progress-fill"
+         style="width: {{ score_percentage }}%;">
+    </div>
+</div>
+
+                <div class="score-bar">
+
+                    <div class="score-progress"></div>
+
+                </div>
+
+
+                <div class="updated">
+                    Updated recently
+                </div>
+                <a href="{% url 'credit_score' %}" class="credit-score-btn">
+                  View Credit Score →
+</a>
+</div>
+
+        </div>
+
+</a>
+</div>
+
+</main>
+
+
+</body>
+
+</html>

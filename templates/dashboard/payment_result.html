@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Payment Result</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px 20px;
+
+            font-family: Arial, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #171033,
+                    #050018 50%,
+                    #02000b
+                );
+
+            color: white;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .card {
+            background: #0b081e;
+
+            border: 1px solid
+                rgba(0, 217, 255, 0.15);
+
+            border-radius: 22px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.5);
+        }
+
+        /* ============================
+           SUCCESS ICON
+        ============================ */
+
+        .icon {
+            width: 80px;
+            height: 80px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(34, 197, 94, 0.12);
+
+            border: 2px solid
+                rgba(34, 197, 94, 0.4);
+
+            font-size: 38px;
+        }
+
+        .error-icon {
+            background:
+                rgba(239, 68, 68, 0.12);
+
+            border-color:
+                rgba(239, 68, 68, 0.4);
+        }
+
+        h1 {
+            text-align: center;
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #9ca3af;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        /* ============================
+           TRANSACTION ID
+        ============================ */
+
+        .transaction-box {
+            padding: 18px;
+
+            margin-bottom: 25px;
+
+            border-radius: 14px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 217, 255, 0.06),
+                    rgba(124, 58, 237, 0.10)
+                );
+
+            border: 1px solid
+                rgba(0, 217, 255, 0.15);
+        }
+
+        .transaction-label {
+            color: #9ca3af;
+
+            font-size: 12px;
+
+            margin-bottom: 7px;
+        }
+
+        .transaction-id {
+            color: #00d9ff;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            word-break: break-all;
+        }
+
+        /* ============================
+           DETAILS
+        ============================ */
+
+        .details {
+            border-top:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            margin-bottom: 25px;
+        }
+
+        .detail-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 15px 0;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.05);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #9ca3af;
+
+            font-size: 14px;
+        }
+
+        .value {
+            text-align: right;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+        .amount {
+            color: #00d9ff;
+
+            font-size: 18px;
+        }
+
+        .success {
+            color: #22c55e;
+        }
+
+        .failed {
+            color: #ef4444;
+        }
+
+        /* ============================
+           SERVICE DETAILS
+        ============================ */
+
+        .service-box {
+            margin-top: 5px;
+
+            margin-bottom: 25px;
+
+            padding: 18px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+        }
+
+        .service-title {
+            color: #00d9ff;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            margin-bottom: 10px;
+        }
+
+        .service-description {
+            color: #d1d5db;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            word-break: break-word;
+        }
+
+        /* ============================
+           MESSAGE
+        ============================ */
+
+        .error-message {
+            padding: 18px;
+
+            margin-bottom: 25px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(239,68,68,0.08);
+
+            border:
+                1px solid
+                rgba(239,68,68,0.20);
+
+            color: #fca5a5;
+
+            text-align: center;
+        }
+
+        /* ============================
+           BUTTONS
+        ============================ */
+
+        .buttons {
+            display: flex;
+
+            gap: 12px;
+        }
+
+        .button {
+            flex: 1;
+
+            display: block;
+
+            padding: 14px;
+
+            border-radius: 11px;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: 0.2s;
+        }
+
+        .primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    #00d9ff,
+                    #7c3aed
+                );
+
+            color: white;
+        }
+
+        .secondary {
+            background:
+                rgba(255,255,255,0.04);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            color: #d1d5db;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .detail-row {
+                flex-direction: column;
+
+                gap: 5px;
+            }
+
+            .value {
+                text-align: left;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        {% if success %}
+
+            <!-- ============================
+                 SUCCESS
+            ============================ -->
+
+            <div class="icon">
+                ✓
+            </div>
+
+            <h1>
+                Payment Successful
+            </h1>
+
+            <p class="subtitle">
+                Your payment has been securely processed.
+            </p>
+
+
+            <!-- ============================
+                 TRANSACTION ID
+            ============================ -->
+
+            <div class="transaction-box">
+
+                <div class="transaction-label">
+                    TRANSACTION ID
+                </div>
+
+                <div class="transaction-id">
+
+                    {% if transaction_id %}
+
+                        {{ transaction_id }}
+
+                    {% else %}
+
+                        Transaction ID Pending
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================
+                 PAYMENT DETAILS
+            ============================ -->
+
+            <div class="details">
+
+                <div class="detail-row">
+
+                    <span class="label">
+                        Payment Type
+                    </span>
+
+                    <span class="value">
+                        {{ payment_type }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="label">
+                        Amount
+                    </span>
+
+                    <span class="value amount">
+                        ₹{{ amount }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="label">
+                        Bank
+                    </span>
+
+                    <span class="value">
+                        {{ bank }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="label">
+                        Status
+                    </span>
+
+                    <span class="value success">
+                        ● SUCCESS
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================
+                 SERVICE INFORMATION
+            ============================ -->
+
+            {% if description %}
+
+                <div class="service-box">
+
+                    <div class="service-title">
+                        Service Details
+                    </div>
+
+                    <div class="service-description">
+
+                        {{ description }}
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ============================
+                 BUTTONS
+            ============================ -->
+
+            <div class="buttons">
+
+                <a
+                    href="{% url 'payments' %}"
+                    class="button primary"
+                >
+                    💳 Payment History
+                </a>
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="button secondary"
+                >
+                    🏠 Dashboard
+                </a>
+
+            </div>
+
+
+        {% else %}
+
+            <!-- ============================
+                 FAILURE
+            ============================ -->
+
+            <div class="icon error-icon">
+                ✕
+            </div>
+
+            <h1>
+                Payment Failed
+            </h1>
+
+            <p class="subtitle">
+                The payment could not be completed.
+            </p>
+
+
+            {% if message %}
+
+                <div class="error-message">
+
+                    {{ message }}
+
+                </div>
+
+            {% endif %}
+
+
+            <div class="buttons">
+
+                <a
+                    href="{% url 'ai_router' %}"
+                    class="button primary"
+                >
+                    Try Again
+                </a>
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="button secondary"
+                >
+                    Dashboard
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

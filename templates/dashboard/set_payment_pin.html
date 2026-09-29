@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set Payment PIN</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background:
+                radial-gradient(circle at top left, #291052, transparent 40%),
+                radial-gradient(circle at bottom right, #003c4d, transparent 40%),
+                #050018;
+
+            color: white;
+        }
+
+        .container {
+            width: 430px;
+            padding: 40px;
+
+            background: #0B081E;
+
+            border: 1px solid #29204d;
+            border-radius: 22px;
+
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+
+            text-align: center;
+        }
+
+        .icon {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 32px;
+
+            background: linear-gradient(
+                135deg,
+                #00D9FF,
+                #7C3AED
+            );
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #9f98b2;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #d8d3e5;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            height: 55px;
+
+            background: #07051A;
+
+            border: 1px solid #30285a;
+            border-radius: 12px;
+
+            color: white;
+
+            text-align: center;
+
+            font-size: 25px;
+            letter-spacing: 10px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #00D9FF;
+            box-shadow: 0 0 15px rgba(0,217,255,0.15);
+        }
+
+        button {
+            width: 100%;
+
+            margin-top: 10px;
+
+            padding: 15px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: linear-gradient(
+                135deg,
+                #00D9FF,
+                #7C3AED
+            );
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .error {
+            background: rgba(255,60,90,0.1);
+            border: 1px solid rgba(255,60,90,0.3);
+
+            color: #ff7185;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 13px;
+        }
+
+        .success {
+            background: rgba(0,217,255,0.08);
+            border: 1px solid rgba(0,217,255,0.25);
+
+            color: #00D9FF;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 13px;
+        }
+
+        .back {
+            display: block;
+
+            margin-top: 20px;
+
+            color: #9991ab;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back:hover {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="icon">
+        🔐
+    </div>
+
+    <h1>Set Payment PIN</h1>
+
+    <p class="subtitle">
+        Create a 4-digit PIN that will be required
+        before every payment.
+    </p>
+
+    {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {% if success %}
+        <div class="success">
+            {{ success }}
+        </div>
+    {% endif %}
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <div class="form-group">
+
+            <label>
+                Enter 4-Digit PIN
+            </label>
+
+            <input
+                type="password"
+                name="pin"
+                maxlength="4"
+                minlength="4"
+                inputmode="numeric"
+                pattern="[0-9]{4}"
+                autocomplete="new-password"
+                required
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                Confirm 4-Digit PIN
+            </label>
+
+            <input
+                type="password"
+                name="confirm_pin"
+                maxlength="4"
+                minlength="4"
+                inputmode="numeric"
+                pattern="[0-9]{4}"
+                autocomplete="new-password"
+                required
+            >
+
+        </div>
+
+        <button type="submit">
+            🔒 Create Payment PIN
+        </button>
+
+    </form>
+
+    <a href="{% url 'dashboard' %}" class="back">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+<script>
+
+    document.querySelectorAll("input").forEach(function(input) {
+
+        input.addEventListener("input", function() {
+
+            this.value = this.value
+                .replace(/\D/g, "")
+                .slice(0, 4);
+
+        });
+
+    });
+
+</script>
+
+</body>
+</html>
