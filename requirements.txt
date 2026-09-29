@@ -33,4 +33,5 @@ twilio==9.11.1
 typing-extensions==4.13.2
 tzdata==2026.4
 urllib3==2.2.3
+whitenoise==6.7.0
 yarl==1.15.2
