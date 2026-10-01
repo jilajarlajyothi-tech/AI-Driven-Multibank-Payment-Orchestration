@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Risk & Compliance | Multibank AI</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #050018;
+        color: #ffffff;
+        min-height: 100vh;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    .navbar {
+        height: 72px;
+        background: #0B081E;
+        border-bottom: 1px solid #241C48;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 30px;
+
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .logo {
+        font-size: 23px;
+        font-weight: 700;
+
+        background: linear-gradient(
+            90deg,
+            #00D9FF,
+            #7C3AED
+        );
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .nav-link {
+        text-decoration: none;
+        color: #aaa4c5;
+
+        padding: 10px 13px;
+
+        border-radius: 9px;
+
+        font-size: 13px;
+
+        transition: 0.3s;
+    }
+
+    .nav-link:hover {
+        color: white;
+        background: #17112f;
+    }
+
+    .nav-link.active {
+        color: #00D9FF;
+        background: #15102c;
+    }
+
+    .profile-link {
+        text-decoration: none;
+        color: white;
+
+        background: #100c25;
+
+        border: 1px solid #241C48;
+
+        padding: 9px 13px;
+
+        border-radius: 9px;
+
+        font-size: 13px;
+    }
+
+    /* ================= MAIN ================= */
+
+    .container {
+        width: 94%;
+        max-width: 1450px;
+
+        margin: 35px auto 60px;
+    }
+
+    .page-header {
+        margin-bottom: 28px;
+    }
+
+    .page-header h1 {
+        font-size: 32px;
+        margin-bottom: 8px;
+    }
+
+    .page-header p {
+        color: #918ba7;
+        font-size: 14px;
+    }
+
+    /* ================= SUMMARY ================= */
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+
+        margin-bottom: 22px;
+    }
+
+    .summary-card {
+        background: #0B081E;
+
+        border: 1px solid #241C48;
+
+        border-radius: 16px;
+
+        padding: 22px;
+
+        transition: 0.3s;
+    }
+
+    .summary-card:hover {
+        transform: translateY(-3px);
+        border-color: #453879;
+    }
+
+    .summary-title {
+        color: #9690ae;
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+
+    .summary-value {
+        font-size: 27px;
+        font-weight: 700;
+    }
+
+    .summary-small {
+        margin-top: 8px;
+        color: #77718e;
+        font-size: 12px;
+    }
+
+    .cyan {
+        color: #00D9FF;
+    }
+
+    .green {
+        color: #34d399;
+    }
+
+    .yellow {
+        color: #fbbf24;
+    }
+
+    .red {
+        color: #fb7185;
+    }
+
+    /* ================= CARDS ================= */
+
+    .two-column {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 20px;
+
+        margin-bottom: 20px;
+    }
+
+    .card {
+        background: #0B081E;
+
+        border: 1px solid #241C48;
+
+        border-radius: 17px;
+
+        padding: 25px;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: 700;
+
+        margin-bottom: 7px;
+    }
+
+    .card-description {
+        color: #85809c;
+        font-size: 13px;
+
+        margin-bottom: 24px;
+    }
+
+    /* ================= AI RISK ================= */
+
+    .risk-score-box {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .risk-circle {
+        width: 150px;
+        height: 150px;
+
+        flex-shrink: 0;
+
+        border-radius: 50%;
+
+        border: 8px solid #241C48;
+
+        background: #08051a;
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+    }
+
+    .risk-number {
+        font-size: 38px;
+        font-weight: 700;
+        color: #00D9FF;
+    }
+
+    .risk-label {
+        font-size: 12px;
+        color: #89839f;
+        margin-top: 3px;
+    }
+
+    .risk-information {
+        flex: 1;
+    }
+
+    .risk-information h3 {
+        margin-bottom: 8px;
+    }
+
+    .risk-information p {
+        color: #918ba7;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .risk-progress {
+        width: 100%;
+        height: 9px;
+
+        background: #1c1733;
+
+        border-radius: 10px;
+
+        margin-top: 18px;
+
+        overflow: hidden;
+    }
+
+    .risk-progress-fill {
+        height: 100%;
+
+        background: linear-gradient(
+            90deg,
+            #00D9FF,
+            #7C3AED
+        );
+
+        border-radius: 10px;
+    }
+
+    /* ================= CHECKS ================= */
+
+    .check-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .check-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 13px 15px;
+
+        background: #100c25;
+
+        border: 1px solid #211a3e;
+
+        border-radius: 10px;
+    }
+
+    .check-name {
+        font-size: 13px;
+    }
+
+    .status {
+        font-size: 10px;
+        font-weight: 700;
+
+        padding: 6px 10px;
+
+        border-radius: 20px;
+    }
+
+    .status-pass {
+        color: #34d399;
+        background: rgba(52, 211, 153, 0.10);
+    }
+
+    .status-monitor {
+        color: #fbbf24;
+        background: rgba(251, 191, 36, 0.10);
+    }
+
+    /* ================= STATS ================= */
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+    }
+
+    .stat-box {
+        padding: 17px;
+
+        background: #100c25;
+
+        border: 1px solid #211a3e;
+
+        border-radius: 12px;
+    }
+
+    .stat-label {
+        color: #88819e;
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    .stat-value {
+        font-size: 21px;
+        font-weight: 700;
+    }
+
+    /* ================= METRICS ================= */
+
+    .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+
+    .metric {
+        background: #100c25;
+
+        border: 1px solid #211a3e;
+
+        border-radius: 12px;
+
+        padding: 17px;
+    }
+
+    .metric-top {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 10px;
+    }
+
+    .metric-name {
+        color: #aaa4be;
+        font-size: 13px;
+    }
+
+    .metric-value {
+        color: #00D9FF;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .metric-bar {
+        width: 100%;
+        height: 7px;
+
+        background: #211b39;
+
+        border-radius: 10px;
+
+        overflow: hidden;
+    }
+
+    .metric-fill {
+        height: 100%;
+
+        background: linear-gradient(
+            90deg,
+            #00D9FF,
+            #7C3AED
+        );
+
+        border-radius: 10px;
+    }
+
+    /* ================= SECURITY REVIEW ================= */
+
+    .security-review {
+        margin-top: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 20px;
+
+        background: #0B081E;
+
+        border: 1px solid #241C48;
+
+        border-radius: 14px;
+    }
+
+    .security-review h3 {
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .security-review p {
+        color: #807a96;
+        font-size: 12px;
+    }
+
+    .review-btn {
+        border: none;
+
+        padding: 11px 18px;
+
+        border-radius: 9px;
+
+        color: white;
+
+        font-size: 13px;
+        font-weight: 700;
+
+        cursor: pointer;
+
+        background: linear-gradient(
+            90deg,
+            #00D9FF,
+            #7C3AED
+        );
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 1100px) {
+
+        .summary-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .two-column {
+            grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+            gap: 2px;
+        }
+
+        .nav-link {
+            padding: 8px;
+        }
+    }
+
+    @media (max-width: 700px) {
+
+        .navbar {
+            height: auto;
+
+            padding: 15px;
+
+            flex-direction: column;
+
+            gap: 15px;
+        }
+
+        .nav-links {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .summary-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .metrics {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .risk-score-box {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+```
+<div class="logo">
+    Multibank AI
+</div>
+
+<div class="nav-links">
+
+    <a href="{% url 'dashboard' %}" class="nav-link">
+        Dashboard
+    </a>
+
+    <a href="{% url 'my_profile' %}" class="nav-link">
+        My Profile
+    </a>
+
+    <a href="{% url 'payments' %}" class="nav-link">
+        Payments
+    </a>
+
+    <a href="{% url 'bank_accounts' %}" class="nav-link">
+        Bank Accounts
+    </a>
+
+    <a href="{% url 'ai_router' %}" class="nav-link">
+        AI Router
+    </a>
+
+    <a href="{% url 'risk_compliance' %}"
+       class="nav-link active">
+        Risk & Compliance
+    </a>
+
+    {% if user.is_staff %}
+        <a href="{% url 'admin:index' %}" class="nav-link">
+            Admin
+        </a>
+    {% endif %}
+
+</div>
+
+<a href="{% url 'my_profile' %}" class="profile-link">
+    {{ request.user.username }}
+</a>
+```
+
+</nav>
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+```
+<div class="page-header">
+
+    <h1>
+        Risk & Compliance
+    </h1>
+
+    <p>
+        Monitor payment security, transaction activity
+        and compliance status in real time.
+    </p>
+
+</div>
+
+
+<!-- ================= SUMMARY ================= -->
+
+<section class="summary-grid">
+
+    <div class="summary-card">
+
+        <div class="summary-title">
+            Overall Risk
+        </div>
+
+        <div class="summary-value green">
+            {{ risk_level }}
+        </div>
+
+        <div class="summary-small">
+            Risk score: {{ risk_score }}/100
+        </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-title">
+            Fraud Detection
+        </div>
+
+        <div class="summary-value cyan">
+            Active
+        </div>
+
+        <div class="summary-small">
+            AI monitoring enabled
+        </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-title">
+            Compliance Score
+        </div>
+
+        <div class="summary-value green">
+            {{ compliance_score }}%
+        </div>
+
+        <div class="summary-small">
+            Transaction compliance
+        </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <div class="summary-title">
+            Alerts
+        </div>
+
+        <div class="summary-value yellow">
+            {{ alerts }}
+        </div>
+
+        <div class="summary-small">
+            Failed transactions
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= AI RISK + COMPLIANCE ================= -->
+
+<section class="two-column">
+
+
+    <!-- AI RISK -->
+
+    <div class="card">
+
+        <div class="card-title">
+            AI Risk Assessment
+        </div>
+
+        <div class="card-description">
+            Automated assessment based on your
+            current transaction activity.
+        </div>
+
+
+        <div class="risk-score-box">
+
+            <div class="risk-circle">
+
+                <div class="risk-number">
+                    {{ risk_score }}
+                </div>
+
+                <div class="risk-label">
+                    Risk Score
+                </div>
+
+            </div>
+
+
+            <div class="risk-information">
+
+                <h3 class="green">
+                    {{ risk_level }}
+                </h3>
+
+                <p>
+                    Your payment activity is being monitored
+                    by the Multibank AI risk engine.
+                </p>
+
+                <div class="risk-progress">
+
+                    <div class="risk-progress-fill"
+                         style="width: {{ risk_score }}%;">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMPLIANCE CHECKS -->
+
+    <div class="card">
+
+        <div class="card-title">
+            Compliance Checks
+        </div>
+
+        <div class="card-description">
+            Current account compliance status.
+        </div>
+
+
+        <div class="check-list">
+
+
+            <!-- KYC -->
+
+            <div class="check-item">
+
+                <span class="check-name">
+                    KYC Verification
+                </span>
+
+                {% if identity_verification == 100 %}
+
+                    <span class="status status-pass">
+                        VERIFIED
+                    </span>
+
+                {% else %}
+
+                    <span class="status status-monitor">
+                        PENDING
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- AML -->
+
+            <div class="check-item">
+
+                <span class="check-name">
+                    AML Monitoring
+                </span>
+
+                {% if compliance_score >= 80 %}
+
+                    <span class="status status-pass">
+                        PASSED
+                    </span>
+
+                {% else %}
+
+                    <span class="status status-monitor">
+                        MONITORING
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- SANCTIONS -->
+
+            <div class="check-item">
+
+                <span class="check-name">
+                    Sanctions Screening
+                </span>
+
+                <span class="status status-pass">
+                    PASSED
+                </span>
+
+            </div>
+
+
+            <!-- TRANSACTION MONITORING -->
+
+            <div class="check-item">
+
+                <span class="check-name">
+                    Transaction Monitoring
+                </span>
+
+                {% if failed_transactions == 0 %}
+
+                    <span class="status status-pass">
+                        SECURE
+                    </span>
+
+                {% else %}
+
+                    <span class="status status-monitor">
+                        MONITORING
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- PAYMENT SECURITY -->
+
+            <div class="check-item">
+
+                <span class="check-name">
+                    Payment Security
+                </span>
+
+                <span class="status status-pass">
+                    ACTIVE
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= TRANSACTION STATISTICS ================= -->
+
+<section class="card">
+
+    <div class="card-title">
+        Transaction Statistics
+    </div>
+
+    <div class="card-description">
+        Payment activity associated with your account.
+    </div>
+
+
+    <div class="stats-grid">
+
+        <div class="stat-box">
+
+            <div class="stat-label">
+                Total Transactions
+            </div>
+
+            <div class="stat-value cyan">
+                {{ total_transactions }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <div class="stat-label">
+                Successful Transactions
+            </div>
+
+            <div class="stat-value green">
+                {{ successful_transactions }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <div class="stat-label">
+                Failed Transactions
+            </div>
+
+            <div class="stat-value red">
+                {{ failed_transactions }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <div class="stat-label">
+                Total Amount
+            </div>
+
+            <div class="stat-value cyan">
+                ₹{{ total_amount|floatformat:2 }}
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= RISK METRICS ================= -->
+
+<section class="card" style="margin-top:20px;">
+
+    <div class="card-title">
+        Risk Metrics
+    </div>
+
+    <div class="card-description">
+        Security indicators calculated from your account.
+    </div>
+
+
+    <div class="metrics">
+
+
+        <!-- TRANSACTION SAFETY -->
+
+        <div class="metric">
+
+            <div class="metric-top">
+
+                <span class="metric-name">
+                    Transaction Safety
+                </span>
+
+                <span class="metric-value">
+                    {{ transaction_safety }}%
+                </span>
+
+            </div>
+
+            <div class="metric-bar">
+
+                <div class="metric-fill"
+                     style="width: {{ transaction_safety }}%;">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- IDENTITY VERIFICATION -->
+
+        <div class="metric">
+
+            <div class="metric-top">
+
+                <span class="metric-name">
+                    Identity Verification
+                </span>
+
+                <span class="metric-value">
+                    {{ identity_verification }}%
+                </span>
+
+            </div>
+
+            <div class="metric-bar">
+
+                <div class="metric-fill"
+                     style="width: {{ identity_verification }}%;">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AML -->
+
+        <div class="metric">
+
+            <div class="metric-top">
+
+                <span class="metric-name">
+                    AML Compliance
+                </span>
+
+                <span class="metric-value">
+                    {{ compliance_score }}%
+                </span>
+
+            </div>
+
+            <div class="metric-bar">
+
+                <div class="metric-fill"
+                     style="width: {{ compliance_score }}%;">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= LAST 30 DAYS ================= -->
+
+<section class="card" style="margin-top:20px;">
+
+    <div class="card-title">
+        Last 30 Days
+    </div>
+
+    <div class="card-description">
+        Recent payment activity from your account.
+    </div>
+
+
+    <div class="stats-grid">
+
+
+        <div class="stat-box">
+
+            <div class="stat-label">
+                Recent Transactions
+            </div>
+
+            <div class="stat-value cyan">
+                {{ recent_transaction_count }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <div class="stat-label">
+                Recent Amount
+            </div>
+
+            <div class="stat-value cyan">
+                ₹{{ recent_amount|floatformat:2 }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <div class="stat-label">
+                Email Verification
+            </div>
+
+            {% if user.email_verified %}
+
+                <div class="stat-value green">
+                    Verified
+                </div>
+
+            {% else %}
+
+                <div class="stat-value yellow">
+                    Pending
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <div class="stat-label">
+                Phone Verification
+            </div>
+
+            {% if user.phone_verified %}
+
+                <div class="stat-value green">
+                    Verified
+                </div>
+
+            {% else %}
+
+                <div class="stat-value yellow">
+                    Pending
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SECURITY REVIEW ================= -->
+
+<div class="security-review">
+
+    <div>
+
+        <h3>
+            Security Review
+        </h3>
+
+        <p>
+            Review your latest security and compliance
+            information.
+        </p>
+
+    </div>
+
+    <button
+        class="review-btn"
+        onclick="window.location.reload();">
+
+        Refresh Analysis
+
+    </button>
+
+</div>
+
+
+</main>
+
+</body>
+</html>

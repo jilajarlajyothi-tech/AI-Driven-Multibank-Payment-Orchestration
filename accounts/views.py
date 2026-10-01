@@ -20,6 +20,7 @@ from django.db import transaction
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import update_session_auth_hash
 from decimal import Decimal
+from .models import Payment
 
 def register(request):
 
@@ -1894,4 +1895,128 @@ def payment_detail(request, payment_id):
         {
             'payment': payment
         }
+    )
+@login_required
+def risk_compliance(request):
+    from django.db.models import Sum
+    from django.utils import timezone
+    from datetime import timedelta
+
+    user = request.user
+
+    # =====================================================
+    # USER PAYMENTS
+    # =====================================================
+
+    payments = Payment.objects.filter(user=user)
+
+    total_transactions = payments.count()
+
+    successful_transactions = payments.filter(
+        status__iexact="SUCCESS"
+    ).count()
+
+    failed_transactions = payments.exclude(
+        status__iexact="SUCCESS"
+    ).count()
+
+    total_amount = payments.aggregate(
+        total=Sum("amount")
+    )["total"] or 0
+
+    # =====================================================
+    # LAST 30 DAYS
+    # =====================================================
+
+    thirty_days_ago = timezone.now() - timedelta(days=30)
+
+    recent_payments = payments.filter(
+        created_at__gte=thirty_days_ago
+    )
+
+    recent_transaction_count = recent_payments.count()
+
+    recent_amount = recent_payments.aggregate(
+        total=Sum("amount")
+    )["total"] or 0
+
+    # =====================================================
+    # COMPLIANCE SCORE
+    # =====================================================
+
+    if total_transactions > 0:
+        compliance_score = round(
+            (successful_transactions / total_transactions) * 100
+        )
+    else:
+        compliance_score = 100
+
+    # =====================================================
+    # TRANSACTION SAFETY
+    # =====================================================
+
+    transaction_safety = compliance_score
+
+    # =====================================================
+    # IDENTITY VERIFICATION
+    # =====================================================
+
+    verified_count = 0
+
+    if user.email_verified:
+        verified_count += 1
+
+    if user.phone_verified:
+        verified_count += 1
+
+    identity_verification = verified_count * 50
+
+    # =====================================================
+    # RISK SCORE
+    # =====================================================
+
+    risk_score = 100 - compliance_score
+
+    if risk_score <= 30:
+        risk_level = "Low Risk"
+    elif risk_score <= 60:
+        risk_level = "Medium Risk"
+    else:
+        risk_level = "High Risk"
+
+    # =====================================================
+    # ALERTS
+    # =====================================================
+
+    alerts = failed_transactions
+
+    # =====================================================
+    # CONTEXT
+    # =====================================================
+
+    context = {
+        "total_transactions": total_transactions,
+        "successful_transactions": successful_transactions,
+        "failed_transactions": failed_transactions,
+
+        "total_amount": total_amount,
+
+        "recent_transaction_count": recent_transaction_count,
+        "recent_amount": recent_amount,
+
+        "compliance_score": compliance_score,
+        "transaction_safety": transaction_safety,
+
+        "identity_verification": identity_verification,
+
+        "risk_score": risk_score,
+        "risk_level": risk_level,
+
+        "alerts": alerts,
+    }
+
+    return render(
+        request,
+        "dashboard/risk_compliance.html",
+        context
     )
