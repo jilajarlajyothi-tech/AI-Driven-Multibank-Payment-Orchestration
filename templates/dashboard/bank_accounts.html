@@ -26,7 +26,9 @@
             color: white;
         }
 
-        /* NAVBAR */
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
 
         .navbar {
             height: 75px;
@@ -56,6 +58,8 @@
             color: #aaa4bd;
             text-decoration: none;
             font-size: 14px;
+
+            transition: 0.2s;
         }
 
         .nav-links a:hover,
@@ -63,7 +67,9 @@
             color: #00d9ff;
         }
 
-        /* MAIN */
+        /* =====================================================
+           MAIN
+        ===================================================== */
 
         .container {
             max-width: 1200px;
@@ -82,9 +88,12 @@
 
         .header p {
             color: #938ca5;
+            font-size: 14px;
         }
 
-        /* SUMMARY */
+        /* =====================================================
+           SUMMARY
+        ===================================================== */
 
         .summary {
             display: grid;
@@ -102,6 +111,13 @@
             border-radius: 18px;
 
             padding: 25px;
+
+            transition: 0.25s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            border-color: #3b3260;
         }
 
         .summary-title {
@@ -118,7 +134,9 @@
             font-weight: bold;
         }
 
-        /* BANK GRID */
+        /* =====================================================
+           BANK GRID
+        ===================================================== */
 
         .bank-grid {
             display: grid;
@@ -127,6 +145,10 @@
 
             gap: 22px;
         }
+
+        /* =====================================================
+           BANK CARD
+        ===================================================== */
 
         .bank-card {
             background:
@@ -204,6 +226,10 @@
             font-size: 26px;
         }
 
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
         .active {
             color: #00ffaa;
 
@@ -232,6 +258,10 @@
             font-size: 11px;
         }
 
+        /* =====================================================
+           BANK DETAILS
+        ===================================================== */
+
         .bank-name {
             font-size: 20px;
 
@@ -248,6 +278,14 @@
             letter-spacing: 1px;
 
             margin-bottom: 25px;
+        }
+
+        /* =====================================================
+           BALANCE
+        ===================================================== */
+
+        .balance-section {
+            margin-top: 5px;
         }
 
         .balance-label {
@@ -270,7 +308,36 @@
             color: #00d9ff;
         }
 
-        /* EMPTY */
+        /* =====================================================
+           READ ONLY INDICATOR
+        ===================================================== */
+
+        .readonly-label {
+            margin-top: 18px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            color: #777086;
+
+            font-size: 11px;
+        }
+
+        .readonly-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #00d9ff;
+        }
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
 
         .empty {
             background: #0b081e;
@@ -298,7 +365,9 @@
             color: #777086;
         }
 
-        /* RESPONSIVE */
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
 
         @media (max-width: 900px) {
 
@@ -328,6 +397,18 @@
             .bank-grid {
                 grid-template-columns: 1fr;
             }
+
+            .header h1 {
+                font-size: 26px;
+            }
+
+            .summary-value {
+                font-size: 24px;
+            }
+
+            .balance {
+                font-size: 25px;
+            }
         }
 
     </style>
@@ -336,7 +417,9 @@
 <body>
 
 
-<!-- NAVBAR -->
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
 <nav class="navbar">
 
@@ -371,10 +454,14 @@
 </nav>
 
 
-<!-- MAIN -->
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
 
 <div class="container">
 
+
+    <!-- HEADER -->
 
     <div class="header">
 
@@ -383,15 +470,20 @@
         </h1>
 
         <p>
-            Manage and monitor your connected banking accounts.
+            View your connected banking accounts and available balances.
         </p>
 
     </div>
 
 
-    <!-- SUMMARY -->
+    <!-- =================================================
+         SUMMARY
+    ================================================= -->
 
     <div class="summary">
+
+
+        <!-- CONNECTED BANKS -->
 
         <div class="summary-card">
 
@@ -406,6 +498,8 @@
         </div>
 
 
+        <!-- ACTIVE ACCOUNTS -->
+
         <div class="summary-card">
 
             <div class="summary-title">
@@ -419,6 +513,8 @@
         </div>
 
 
+        <!-- TOTAL BALANCE -->
+
         <div class="summary-card">
 
             <div class="summary-title">
@@ -431,10 +527,13 @@
 
         </div>
 
+
     </div>
 
 
-    <!-- BANK ACCOUNTS -->
+    <!-- =================================================
+         BANK ACCOUNTS
+    ================================================= -->
 
     {% if bank_accounts %}
 
@@ -444,7 +543,11 @@
 
                 <div class="bank-card">
 
+
+                    <!-- TOP -->
+
                     <div class="bank-top">
+
 
                         <div class="bank-icon">
                             🏦
@@ -465,8 +568,11 @@
 
                         {% endif %}
 
+
                     </div>
 
+
+                    <!-- BANK NAME -->
 
                     <div class="bank-name">
 
@@ -475,6 +581,8 @@
                     </div>
 
 
+                    <!-- ACCOUNT NUMBER -->
+
                     <div class="account-number">
 
                         Account •••• {{ account.account_number|slice:"-4:" }}
@@ -482,18 +590,35 @@
                     </div>
 
 
-                    <div class="balance-label">
+                    <!-- BALANCE -->
 
-                        AVAILABLE BALANCE
+                    <div class="balance-section">
+
+                        <div class="balance-label">
+
+                            AVAILABLE BALANCE
+
+                        </div>
+
+                        <div class="balance">
+
+                            <span>₹</span>{{ account.balance|floatformat:2 }}
+
+                        </div>
 
                     </div>
 
 
-                    <div class="balance">
+                    <!-- READ ONLY -->
 
-                        <span>₹</span>{{ account.balance|floatformat:2 }}
+                    <div class="readonly-label">
+
+                        <span class="readonly-dot"></span>
+
+                        View only
 
                     </div>
+
 
                 </div>
 
@@ -501,7 +626,13 @@
 
         </div>
 
+
     {% else %}
+
+
+        <!-- =================================================
+             EMPTY STATE
+        ================================================= -->
 
         <div class="empty">
 
@@ -510,18 +641,21 @@
             </div>
 
             <h2>
-                No Bank Accounts
+                No Bank Accounts Connected
             </h2>
 
             <p>
-                Add a bank account to start using AI Payment Routing.
+                Your connected banking accounts will appear here.
             </p>
 
         </div>
 
+
     {% endif %}
 
+
 </div>
+
 
 </body>
 </html>

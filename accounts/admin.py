@@ -1,5 +1,3 @@
-
-
 from django.contrib import admin
 from .models import BankAccount, Payment
 
@@ -25,8 +23,15 @@ class BankAccountAdmin(admin.ModelAdmin):
         'user__username',
         'account_number',
     )
+
+    ordering = (
+        '-created_at',
+    )
+
+
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
+
     list_display = (
         'user',
         'payment_type',

@@ -2,11 +2,8 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Multibank AI | Dashboard</title>
 
@@ -571,17 +568,6 @@
            CREDIT SCORE
         ===================================================== */
 
-        .credit-score-link {
-            display: block;
-            color: inherit;
-            transition: 0.25s;
-        }
-
-        .credit-score-link:hover {
-            border-color: #00D9FF;
-            transform: translateY(-2px);
-        }
-
         .score {
             font-size: 43px;
             font-weight: 700;
@@ -640,230 +626,6 @@
 
 
         /* =====================================================
-           BANK ACCOUNT OVERVIEW
-        ===================================================== */
-
-        .bank-overview {
-            margin-top: 35px;
-            margin-bottom: 28px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
-        }
-
-        .section-header h2 {
-            margin: 0;
-            color: #ffffff;
-            font-size: 22px;
-        }
-
-        .section-header p {
-            margin-top: 5px;
-            color: #8f89a3;
-            font-size: 13px;
-        }
-
-        .view-all-btn {
-            text-decoration: none;
-            color: #00D9FF;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .view-all-btn:hover {
-            color: #ffffff;
-        }
-
-
-        /* =====================================================
-           BANK SUMMARY
-        ===================================================== */
-
-        .bank-summary {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 18px;
-            margin-bottom: 18px;
-        }
-
-        .bank-summary-card {
-            background: #0B081E;
-            border: 1px solid #21183D;
-            border-radius: 18px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .summary-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            background: rgba(0, 217, 255, 0.08);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 23px;
-        }
-
-        .bank-summary-card small {
-            color: #8f89a3;
-            font-size: 12px;
-        }
-
-        .bank-summary-card h3 {
-            margin: 5px 0 0;
-            color: #ffffff;
-            font-size: 21px;
-        }
-
-
-        /* =====================================================
-           BANK CARDS
-        ===================================================== */
-
-        .bank-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-        }
-
-        .bank-card {
-            background: linear-gradient(
-                145deg,
-                #0B081E,
-                #110A29
-            );
-
-            border: 1px solid #21183D;
-            border-radius: 20px;
-            padding: 20px;
-            transition: 0.25s ease;
-        }
-
-        .bank-card:hover {
-            transform: translateY(-4px);
-            border-color: #00D9FF;
-            box-shadow:
-                0 10px 35px rgba(0, 217, 255, 0.08);
-        }
-
-        .bank-card-top {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .bank-logo {
-            width: 46px;
-            height: 46px;
-            border-radius: 13px;
-            background: linear-gradient(
-                135deg,
-                #00D9FF,
-                #7C3AED
-            );
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-
-        .bank-card h3 {
-            margin: 0;
-            color: #ffffff;
-            font-size: 15px;
-        }
-
-        .account-number {
-            display: block;
-            margin-top: 4px;
-            color: #77708b;
-            font-size: 12px;
-        }
-
-        .status {
-            margin-left: auto;
-            font-size: 11px;
-        }
-
-        .status.active {
-            color: #22c55e;
-        }
-
-        .status.inactive {
-            color: #ef4444;
-        }
-
-        .bank-balance {
-            margin-top: 28px;
-        }
-
-        .bank-balance small {
-            color: #77708b;
-            font-size: 12px;
-        }
-
-        .bank-balance strong {
-            display: block;
-            margin-top: 6px;
-            color: #ffffff;
-            font-size: 25px;
-        }
-
-
-        /* =====================================================
-           EMPTY BANK STATE
-        ===================================================== */
-
-        .empty-bank {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 45px;
-            background: #0B081E;
-            border: 1px dashed #30264D;
-            border-radius: 18px;
-        }
-
-        .empty-bank div {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        .empty-bank h3 {
-            color: #ffffff;
-            margin-bottom: 7px;
-        }
-
-        .empty-bank p {
-            color: #8f89a3;
-            margin-bottom: 12px;
-        }
-
-        .empty-bank a {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 11px 18px;
-            border-radius: 10px;
-            background: linear-gradient(
-                90deg,
-                #00D9FF,
-                #7C3AED
-            );
-
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-
-        /* =====================================================
            RESPONSIVE - TABLET
         ===================================================== */
 
@@ -885,7 +647,6 @@
             .service-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
-
         }
 
 
@@ -927,15 +688,6 @@
             .service-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
-            .bank-cards {
-                grid-template-columns: 1fr;
-            }
-
-            .bank-summary {
-                grid-template-columns: 1fr;
-            }
-
         }
 
 
@@ -998,11 +750,9 @@
             .transaction-amount {
                 font-size: 12px;
             }
-
         }
 
     </style>
-
 </head>
 
 
@@ -1017,19 +767,11 @@
 
     <div class="nav-container">
 
-
         <!-- LOGO -->
 
         <div class="logo">
-
-            <span class="logo-main">
-                Multibank
-            </span>
-
-            <span class="logo-ai">
-                AI
-            </span>
-
+            <span class="logo-main">Multibank</span>
+            <span class="logo-ai">AI</span>
         </div>
 
 
@@ -1037,14 +779,12 @@
 
         <div class="nav-menu">
 
-
             <!-- DASHBOARD -->
 
             <a href="{% url 'dashboard' %}"
                class="nav-link active">
 
                 <span class="nav-icon">🏠</span>
-
                 Dashboard
 
             </a>
@@ -1056,7 +796,6 @@
                class="nav-link">
 
                 <span class="nav-icon">💳</span>
-
                 Payments
 
             </a>
@@ -1068,7 +807,6 @@
                class="nav-link">
 
                 <span class="nav-icon">🏦</span>
-
                 Bank Accounts
 
             </a>
@@ -1080,7 +818,6 @@
                class="nav-link">
 
                 <span class="nav-icon">🤖</span>
-
                 AI Router
 
             </a>
@@ -1092,7 +829,6 @@
                class="nav-link">
 
                 <span class="nav-icon">🛡️</span>
-
                 Risk & Compliance
 
             </a>
@@ -1104,7 +840,6 @@
                class="nav-link">
 
                 <span class="nav-icon">📱</span>
-
                 Recharge & Bills
 
             </a>
@@ -1118,13 +853,11 @@
                    class="nav-link">
 
                     <span class="nav-icon">⚙️</span>
-
                     Admin
 
                 </a>
 
             {% endif %}
-
 
         </div>
 
@@ -1160,15 +893,11 @@
                 <div class="profile-info">
 
                     <div class="profile-name">
-
                         {{ request.user.username }}
-
                     </div>
 
                     <div class="profile-role">
-
                         User
-
                     </div>
 
                 </div>
@@ -1177,10 +906,10 @@
 
         </a>
 
-
     </div>
 
 </nav>
+
 
 
 <!-- =========================================================
@@ -1199,8 +928,15 @@
         <div class="welcome">
 
             <h1>
-                Good Morning, {{ request.user.username }} 👋
+
+                <span id="greetingText">
+                    Good Morning
+                </span>,
+
+                {{ request.user.first_name|default:request.user.username }} 👋
+
             </h1>
+
 
             <p>
                 Manage your payments, accounts and financial
@@ -1219,6 +955,7 @@
         >
 
     </div>
+
 
 
     <!-- =====================================================
@@ -1287,8 +1024,8 @@
 
         </div>
 
-
     </div>
+
 
 
     <!-- =====================================================
@@ -1300,6 +1037,7 @@
         <div class="service-title">
             Recharge & Bills
         </div>
+
 
         <div class="service-grid">
 
@@ -1359,10 +1097,10 @@
 
             </a>
 
-
         </div>
 
     </div>
+
 
 
     <!-- =====================================================
@@ -1374,6 +1112,7 @@
         <div class="service-title">
             Loans
         </div>
+
 
         <div class="service-grid">
 
@@ -1433,10 +1172,10 @@
 
             </a>
 
-
         </div>
 
     </div>
+
 
 
     <!-- =====================================================
@@ -1448,6 +1187,7 @@
         <div class="service-title">
             Insurance
         </div>
+
 
         <div class="service-grid">
 
@@ -1507,10 +1247,10 @@
 
             </a>
 
-
         </div>
 
     </div>
+
 
 
     <!-- =====================================================
@@ -1522,6 +1262,7 @@
         <div class="service-title">
             Benefits
         </div>
+
 
         <div class="service-grid">
 
@@ -1581,10 +1322,10 @@
 
             </a>
 
-
         </div>
 
     </div>
+
 
 
     <!-- =====================================================
@@ -1596,6 +1337,7 @@
         <div class="service-title">
             Other Services
         </div>
+
 
         <div class="service-grid">
 
@@ -1655,180 +1397,10 @@
 
             </a>
 
-
         </div>
 
     </div>
 
-
-    <!-- =====================================================
-         BANK ACCOUNT OVERVIEW
-    ===================================================== -->
-
-    <div class="bank-overview">
-
-        <div class="section-header">
-
-            <div>
-
-                <h2>
-                    Bank Account Overview
-                </h2>
-
-                <p>
-                    View your connected bank accounts and balances.
-                </p>
-
-            </div>
-
-            <a href="{% url 'bank_accounts' %}"
-               class="view-all-btn">
-
-                View All →
-
-            </a>
-
-        </div>
-
-
-        <!-- BANK SUMMARY -->
-
-        <div class="bank-summary">
-
-
-            <div class="bank-summary-card">
-
-                <div class="summary-icon">
-                    🏦
-                </div>
-
-                <div>
-
-                    <small>
-                        Connected Accounts
-                    </small>
-
-                    <h3>
-                        {{ bank_accounts|length }}
-                    </h3>
-
-                </div>
-
-            </div>
-
-
-            <div class="bank-summary-card">
-
-                <div class="summary-icon">
-                    💰
-                </div>
-
-                <div>
-
-                    <small>
-                        Total Available Balance
-                    </small>
-
-                    <h3>
-                        ₹{{ total_balance|floatformat:2 }}
-                    </h3>
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-        <!-- BANK CARDS -->
-
-        <div class="bank-cards">
-
-
-            {% for account in bank_accounts %}
-
-            <div class="bank-card">
-
-                <div class="bank-card-top">
-
-                    <div class="bank-logo">
-                        🏦
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            {{ account.bank_name }}
-                        </h3>
-
-                        <span class="account-number">
-                            ****{{ account.account_number|slice:"-4:" }}
-                        </span>
-
-                    </div>
-
-
-                    {% if account.is_active %}
-
-                        <span class="status active">
-                            Active
-                        </span>
-
-                    {% else %}
-
-                        <span class="status inactive">
-                            Inactive
-                        </span>
-
-                    {% endif %}
-
-                </div>
-
-
-                <div class="bank-balance">
-
-                    <small>
-                        Available Balance
-                    </small>
-
-                    <strong>
-                        ₹{{ account.balance|floatformat:2 }}
-                    </strong>
-
-                </div>
-
-            </div>
-
-            {% empty %}
-
-            <div class="empty-bank">
-
-                <div>
-                    🏦
-                </div>
-
-                <h3>
-                    No Bank Accounts Added
-                </h3>
-
-                <p>
-                    Connect a bank account to start using
-                    Multibank AI payment orchestration.
-                </p>
-
-                <a href="{% url 'bank_accounts' %}">
-                    Add Bank Account
-                </a>
-
-            </div>
-
-            {% endfor %}
-
-
-        </div>
-
-    </div>
 
 
     <!-- =====================================================
@@ -1874,6 +1446,7 @@
                             💳
                         </div>
 
+
                         <div>
 
                             <div class="transaction-name">
@@ -1882,11 +1455,13 @@
 
                             </div>
 
+
                             <div class="transaction-description">
 
                                 {{ payment.description|default:"Payment transaction" }}
 
                             </div>
+
 
                             <div class="transaction-date">
 
@@ -1907,6 +1482,7 @@
 
                         </div>
 
+
                         <div class="transaction-status">
 
                             {{ payment.status }}
@@ -1915,8 +1491,8 @@
 
                     </div>
 
-
                 </div>
+
 
                 {% empty %}
 
@@ -1928,10 +1504,10 @@
 
                 {% endfor %}
 
-
             </div>
 
         </div>
+
 
 
         <!-- =================================================
@@ -1949,12 +1525,16 @@
                     🤖 AI Payment Router
                 </h2>
 
+
                 <p>
+
                     Our intelligent routing system selects
                     the appropriate banking route for your
                     transaction based on availability,
                     cost and risk signals.
+
                 </p>
+
 
                 <a href="{% url 'ai_router' %}"
                    class="ai-open-btn">
@@ -1964,6 +1544,7 @@
                 </a>
 
             </div>
+
 
 
             <!-- CREDIT SCORE -->
@@ -2019,16 +1600,72 @@
 
             </div>
 
-
         </div>
 
-
     </div>
-
 
 </main>
 
 
-</body>
 
+<!-- =========================================================
+     DYNAMIC GREETING
+========================================================= -->
+
+<script>
+
+    function updateGreeting() {
+
+        const hour = new Date().getHours();
+
+        const greetingText =
+            document.getElementById("greetingText");
+
+        if (!greetingText) {
+            return;
+        }
+
+
+        if (hour >= 5 && hour < 12) {
+
+            greetingText.textContent =
+                "Good Morning";
+
+        }
+
+        else if (hour >= 12 && hour < 17) {
+
+            greetingText.textContent =
+                "Good Afternoon";
+
+        }
+
+        else if (hour >= 17 && hour < 21) {
+
+            greetingText.textContent =
+                "Good Evening";
+
+        }
+
+        else {
+
+            greetingText.textContent =
+                "Good Night";
+
+        }
+
+    }
+
+
+    updateGreeting();
+
+
+    // Update greeting automatically every minute
+
+    setInterval(updateGreeting, 60000);
+
+</script>
+
+
+</body>
 </html>
