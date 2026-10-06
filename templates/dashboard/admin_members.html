@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Members | Multibank AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #090817;
+            color: #ffffff;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1400px;
+            margin: 40px auto;
+        }
+
+        /* HEADER */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .title h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .title p {
+            margin-top: 8px;
+            color: #aaa5c7;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #00d9ff, #7c3aed);
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* SUMMARY */
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: #111022;
+            border: 1px solid #251c4a;
+            border-radius: 16px;
+            padding: 22px;
+            transition: 0.3s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            border-color: #00d9ff;
+        }
+
+        .summary-card span {
+            color: #aaa5c7;
+            font-size: 14px;
+        }
+
+        .summary-card h2 {
+            margin: 10px 0 0;
+            font-size: 30px;
+        }
+
+        .summary-card small {
+            display: block;
+            margin-top: 8px;
+            color: #777291;
+            font-size: 12px;
+        }
+
+        /* SEARCH AND FILTER */
+
+        .search-card {
+            background: #111022;
+            border: 1px solid #251c4a;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 13px 15px 13px 45px;
+            background: #090817;
+            border: 1px solid #30265b;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-box input::placeholder {
+            color: #777291;
+        }
+
+        .search-box input:focus {
+            border-color: #00d9ff;
+        }
+
+        .filter-select {
+            padding: 13px 15px;
+            background: #090817;
+            border: 1px solid #30265b;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+            font-size: 14px;
+            min-width: 190px;
+        }
+
+        .filter-select:focus {
+            border-color: #00d9ff;
+        }
+
+        .filter-select option {
+            background: #111022;
+            color: white;
+        }
+
+        .search-btn {
+            border: none;
+            padding: 13px 22px;
+            border-radius: 10px;
+            color: white;
+            background: linear-gradient(135deg, #00d9ff, #7c3aed);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .clear-btn {
+            text-decoration: none;
+            padding: 13px 18px;
+            border-radius: 10px;
+            background: #211b3c;
+            border: 1px solid #30265b;
+            color: #aaa5c7;
+            font-size: 14px;
+        }
+
+        .clear-btn:hover {
+            color: white;
+            border-color: #00d9ff;
+        }
+
+        /* TABLE */
+
+        .table-card {
+            background: #111022;
+            border: 1px solid #251c4a;
+            border-radius: 18px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1050px;
+        }
+
+        th {
+            text-align: left;
+            color: #00d9ff;
+            padding: 15px;
+            border-bottom: 1px solid #30265b;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #211b3c;
+            color: #e9e6f7;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        tr:hover {
+            background: #15122a;
+        }
+
+        .username {
+            font-weight: 600;
+            color: white;
+        }
+
+        .email {
+            color: #c8c3df;
+        }
+
+        .phone {
+            color: #aaa5c7;
+        }
+
+        .verified {
+            color: #39e58c;
+            font-weight: bold;
+        }
+
+        .not-verified {
+            color: #ff6b81;
+            font-weight: bold;
+        }
+
+        .account-count {
+            color: #c9c4df;
+            font-weight: 600;
+        }
+
+        .balance {
+            color: #00d9ff;
+            font-weight: bold;
+        }
+
+        .joined {
+            color: #aaa5c7;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            text-align: center;
+            padding: 50px;
+            color: #aaa5c7;
+        }
+
+        .empty-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .empty h3 {
+            margin: 0 0 8px;
+            color: white;
+        }
+
+        .empty p {
+            margin: 0;
+            color: #777291;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 900px) {
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+            }
+
+            .back-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .search-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .filter-select,
+            .search-btn,
+            .clear-btn {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="title">
+
+            <h1>
+                Admin Members
+            </h1>
+
+            <p>
+                Manage and monitor registered Multibank AI users
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="back-btn"
+        >
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+        <div class="summary-card">
+
+            <span>
+                👥 Total Members
+            </span>
+
+            <h2>
+                {{ total_members }}
+            </h2>
+
+            <small>
+                Registered users
+            </small>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                📧 Verified Emails
+            </span>
+
+            <h2>
+                {{ verified_email_count }}
+            </h2>
+
+            <small>
+                Users with verified email
+            </small>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                🏦 Total Bank Accounts
+            </span>
+
+            <h2>
+                {{ total_bank_accounts }}
+            </h2>
+
+            <small>
+                Linked bank accounts
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- SEARCH + FILTER -->
+
+    <div class="search-card">
+
+        <form
+            method="GET"
+            class="search-form"
+        >
+
+            <div class="search-box">
+
+                <span class="search-icon">
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search username, email or phone..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <select
+                name="status"
+                class="filter-select"
+            >
+
+                <option value="">
+                    All Users
+                </option>
+
+                <option
+                    value="email_verified"
+                    {% if status == "email_verified" %}
+                        selected
+                    {% endif %}
+                >
+                    ✓ Email Verified
+                </option>
+
+                <option
+                    value="email_pending"
+                    {% if status == "email_pending" %}
+                        selected
+                    {% endif %}
+                >
+                    ✗ Email Pending
+                </option>
+
+                <option
+                    value="phone_verified"
+                    {% if status == "phone_verified" %}
+                        selected
+                    {% endif %}
+                >
+                    ✓ Phone Verified
+                </option>
+
+                <option
+                    value="phone_pending"
+                    {% if status == "phone_pending" %}
+                        selected
+                    {% endif %}
+                >
+                    ✗ Phone Pending
+                </option>
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="search-btn"
+            >
+                Search
+            </button>
+
+
+            {% if search or status %}
+
+                <a
+                    href="{% url 'admin_members' %}"
+                    class="clear-btn"
+                >
+                    Clear
+                </a>
+
+            {% endif %}
+
+        </form>
+
+    </div>
+
+
+    <!-- MEMBERS TABLE -->
+
+    <div class="table-card">
+
+        {% if members %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Username
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+
+                    <th>
+                        Phone
+                    </th>
+
+                    <th>
+                        Email Status
+                    </th>
+
+                    <th>
+                        Phone Status
+                    </th>
+
+                    <th>
+                        Bank Accounts
+                    </th>
+
+                    <th>
+                        Total Balance
+                    </th>
+
+                    <th>
+                        Joined
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for member in members %}
+
+                <tr>
+
+                    <td>
+
+                        <a
+    href="{% url 'admin_member_detail' member.id %}"
+    class="username"
+    style="text-decoration: none; color: #00d9ff;"
+>
+    {{ member.username }}
+</a>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="email">
+                            {{ member.email }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="phone">
+                            {{ member.phone_number }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        {% if member.email_verified %}
+
+                            <span class="verified">
+                                ✓ Verified
+                            </span>
+
+                        {% else %}
+
+                            <span class="not-verified">
+                                ✗ Pending
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if member.phone_verified %}
+
+                            <span class="verified">
+                                ✓ Verified
+                            </span>
+
+                        {% else %}
+
+                            <span class="not-verified">
+                                ✗ Pending
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="account-count">
+                            {{ member.bank_account_count }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="balance">
+                            ₹{{ member.total_balance|default:"0.00" }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="joined">
+                            {{ member.date_joined|date:"d M Y" }}
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        {% else %}
+
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🔍
+            </div>
+
+            <h3>
+                No Members Found
+            </h3>
+
+            <p>
+
+                {% if search or status %}
+
+                    No users match the selected search or filter.
+
+                {% else %}
+
+                    No users have registered in Multibank AI yet.
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

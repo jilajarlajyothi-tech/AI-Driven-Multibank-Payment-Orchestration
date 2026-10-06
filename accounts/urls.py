@@ -59,5 +59,20 @@ urlpatterns = [
     views.risk_compliance,
     name="risk_compliance"
 ),
+    path(
+    'verify-email/',
+    views.verify_email,
+    name='verify_email'
+),
+    path(
+    'admin-members/',
+    views.admin_members,
+    name='admin_members'
+),
+    path(
+    'admin-members/<int:user_id>/',
+    views.admin_member_detail,
+    name='admin_member_detail'
+),
 ]
 

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ member.username }} | Admin Member | Multibank AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #090817;
+            color: #ffffff;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        /* HEADER */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .title h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .title p {
+            margin-top: 8px;
+            color: #aaa5c7;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: linear-gradient(
+                135deg,
+                #00d9ff,
+                #7c3aed
+            );
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* PROFILE */
+
+        .profile-card {
+            background: #111022;
+            border: 1px solid #251c4a;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 22px;
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .profile-photo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #00d9ff;
+        }
+
+        .profile-placeholder {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            font-weight: bold;
+            background: linear-gradient(
+                135deg,
+                #00d9ff,
+                #7c3aed
+            );
+        }
+
+        .profile-name h2 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .profile-name p {
+            margin: 8px 0 0;
+            color: #aaa5c7;
+        }
+
+        /* GRID */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 28px;
+        }
+
+        .info-card {
+            background: #090817;
+            border: 1px solid #251c4a;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .info-label {
+            color: #777291;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        /* STATUS */
+
+        .verified {
+            color: #39e58c;
+        }
+
+        .pending {
+            color: #ff6b81;
+        }
+
+        /* SECTION */
+
+        .section-title {
+            margin: 30px 0 15px;
+            font-size: 21px;
+        }
+
+        /* BANK ACCOUNTS */
+
+        .accounts-card {
+            background: #111022;
+            border: 1px solid #251c4a;
+            border-radius: 20px;
+            padding: 22px;
+        }
+
+        .account {
+            padding: 20px;
+            border: 1px solid #251c4a;
+            background: #090817;
+            border-radius: 14px;
+            margin-bottom: 15px;
+        }
+
+        .account:last-child {
+            margin-bottom: 0;
+        }
+
+        .account-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .bank-name {
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .active {
+            color: #39e58c;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .inactive {
+            color: #ff6b81;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .account-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .account-item span {
+            display: block;
+        }
+
+        .account-label {
+            color: #777291;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .account-value {
+            color: #e9e6f7;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .account-balance {
+            color: #00d9ff;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .total-balance {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 14px;
+            background: linear-gradient(
+                135deg,
+                rgba(0, 217, 255, 0.08),
+                rgba(124, 58, 237, 0.08)
+            );
+            border: 1px solid #30265b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-balance span {
+            color: #aaa5c7;
+        }
+
+        .total-balance strong {
+            color: #00d9ff;
+            font-size: 22px;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            text-align: center;
+            padding: 35px;
+            color: #777291;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+            }
+
+            .back-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .profile-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .account-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .total-balance {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="title">
+
+            <h1>
+                Member Details
+            </h1>
+
+            <p>
+                Complete user information
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'admin_members' %}"
+            class="back-btn"
+        >
+            ← Back to Members
+        </a>
+
+    </div>
+
+
+
+    <!-- PROFILE -->
+
+    <div class="profile-card">
+
+        <div class="profile-top">
+
+
+            {% if member.profile_photo %}
+
+                <img
+                    src="{{ member.profile_photo.url }}"
+                    class="profile-photo"
+                    alt="Profile Photo"
+                >
+
+            {% else %}
+
+                <div class="profile-placeholder">
+
+                    {{ member.username|first|upper }}
+
+                </div>
+
+            {% endif %}
+
+
+            <div class="profile-name">
+
+                <h2>
+                    {{ member.username }}
+                </h2>
+
+                <p>
+                    Multibank AI Member
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- INFORMATION -->
+
+        <div class="info-grid">
+
+
+            <div class="info-card">
+
+                <div class="info-label">
+                    Username
+                </div>
+
+                <div class="info-value">
+                    {{ member.username }}
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-label">
+                    Email
+                </div>
+
+                <div class="info-value">
+                    {{ member.email }}
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-label">
+                    Phone Number
+                </div>
+
+                <div class="info-value">
+                    {{ member.phone_number }}
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-label">
+                    Email Verification
+                </div>
+
+                <div class="info-value">
+
+                    {% if member.email_verified %}
+
+                        <span class="verified">
+                            ✓ Verified
+                        </span>
+
+                    {% else %}
+
+                        <span class="pending">
+                            ✗ Pending
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-label">
+                    Phone Verification
+                </div>
+
+                <div class="info-value">
+
+                    {% if member.phone_verified %}
+
+                        <span class="verified">
+                            ✓ Verified
+                        </span>
+
+                    {% else %}
+
+                        <span class="pending">
+                            ✗ Pending
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-label">
+                    Credit Score
+                </div>
+
+                <div class="info-value">
+                    {{ member.credit_score }}
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-label">
+                    Account Status
+                </div>
+
+                <div class="info-value">
+
+                    {% if member.is_active %}
+
+                        <span class="verified">
+                            ● Active
+                        </span>
+
+                    {% else %}
+
+                        <span class="pending">
+                            ● Inactive
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-label">
+                    Joined Date
+                </div>
+
+                <div class="info-value">
+                    {{ member.date_joined|date:"d M Y, h:i A" }}
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- BANK ACCOUNTS -->
+
+    <h2 class="section-title">
+        🏦 Bank Accounts
+    </h2>
+
+
+    <div class="accounts-card">
+
+
+        {% if bank_accounts %}
+
+
+            {% for account in bank_accounts %}
+
+
+                <div class="account">
+
+
+                    <div class="account-header">
+
+                        <div class="bank-name">
+                            {{ account.bank_name }}
+                        </div>
+
+
+                        {% if account.is_active %}
+
+                            <div class="active">
+                                ● Active
+                            </div>
+
+                        {% else %}
+
+                            <div class="inactive">
+                                ● Inactive
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <div class="account-grid">
+
+
+                        <div class="account-item">
+
+                            <span class="account-label">
+                                Account Number
+                            </span>
+
+                            <span class="account-value">
+                                {{ account.account_number }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="account-item">
+
+                            <span class="account-label">
+                                Balance
+                            </span>
+
+                            <span class="account-balance">
+                                ₹{{ account.balance }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="account-item">
+
+                            <span class="account-label">
+                                Created
+                            </span>
+
+                            <span class="account-value">
+                                {{ account.created_at|date:"d M Y" }}
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+            <div class="total-balance">
+
+                <span>
+                    Total Balance Across Accounts
+                </span>
+
+                <strong>
+                    ₹{{ total_balance }}
+                </strong>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                No bank accounts linked to this member.
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

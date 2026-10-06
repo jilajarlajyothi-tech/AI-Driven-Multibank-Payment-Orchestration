@@ -1,6 +1,35 @@
 from django.contrib import admin
-from .models import BankAccount, Payment
+from .models import BankAccount, Payment, CustomUser
+@admin.register(CustomUser)
+class CustomUserAdmin(admin.ModelAdmin):
 
+    list_display = (
+        'username',
+        'email',
+        'phone_number',
+        'email_verified',
+        'phone_verified',
+        'credit_score',
+        'is_active',
+        'date_joined',
+    )
+
+    list_filter = (
+        'email_verified',
+        'phone_verified',
+        'is_active',
+        'is_staff',
+    )
+
+    search_fields = (
+        'username',
+        'email',
+        'phone_number',
+    )
+
+    ordering = (
+        '-date_joined',
+    )
 
 @admin.register(BankAccount)
 class BankAccountAdmin(admin.ModelAdmin):

@@ -3,15 +3,15 @@ import uuid
 from datetime import timedelta
 
 from django.contrib import messages
-from django.contrib.auth import login
-from django.contrib.auth import authenticate
+from django.contrib.auth import login, logout
+from django.contrib.auth import authenticate, get_user_model
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
-from django.db.models import Sum , Q
+from django.db.models import Sum , Q, Count
 from .models import BankAccount,Payment
 from accounts.models import CustomUser
 from ml.fraud_detector import detect_fraud
@@ -21,32 +21,66 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import update_session_auth_hash
 from decimal import Decimal
 from .models import Payment
+from django.contrib.auth.decorators import user_passes_test
 
 def register(request):
 
     if request.method == 'POST':
 
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        phone_number = request.POST.get('phone_number')
+        username = request.POST.get('username', '').strip()
+        email = request.POST.get('email', '').strip().lower()
+        phone_number = request.POST.get('phone_number', '').strip()
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
+        # -----------------------------------------
+        # VALIDATION
+        # -----------------------------------------
+
+        if not username or not email or not phone_number:
+            messages.error(
+                request,
+                'Please fill in all required fields.'
+            )
+            return redirect('register')
+
         if password != confirm_password:
-            messages.error(request, 'Passwords do not match.')
+            messages.error(
+                request,
+                'Passwords do not match.'
+            )
             return redirect('register')
 
-        if CustomUser.objects.filter(username=username).exists():
-            messages.error(request, 'Username already exists.')
+        if CustomUser.objects.filter(
+            username=username
+        ).exists():
+            messages.error(
+                request,
+                'Username already exists.'
+            )
             return redirect('register')
 
-        if CustomUser.objects.filter(email=email).exists():
-            messages.error(request, 'Email already registered.')
+        if CustomUser.objects.filter(
+            email=email
+        ).exists():
+            messages.error(
+                request,
+                'Email already registered.'
+            )
             return redirect('register')
 
-        if CustomUser.objects.filter(phone_number=phone_number).exists():
-            messages.error(request, 'Phone number already registered.')
+        if CustomUser.objects.filter(
+            phone_number=phone_number
+        ).exists():
+            messages.error(
+                request,
+                'Phone number already registered.'
+            )
             return redirect('register')
+
+        # -----------------------------------------
+        # CREATE USER
+        # -----------------------------------------
 
         user = CustomUser.objects.create_user(
             username=username,
@@ -55,15 +89,37 @@ def register(request):
             password=password
         )
 
-        user.email_verified = False
+        # -----------------------------------------
+        # TEMPORARY DEVELOPMENT VERIFICATION
+        # -----------------------------------------
+        # Email verification is temporarily disabled.
+        # We will configure Gmail verification later.
+
+        user.email_verified = True
         user.phone_verified = False
-        user.save()
 
-        messages.success(request, 'Account created successfully!')
+        user.save(
+            update_fields=[
+                'email_verified',
+                'phone_verified'
+            ]
+        )
 
-        return redirect('register')
+        # -----------------------------------------
+        # ACCOUNT CREATED
+        # -----------------------------------------
 
-    return render(request, 'accounts/register.html')
+        messages.success(
+            request,
+            'Account created successfully! You can now log in.'
+        )
+
+        return redirect('login')
+
+    return render(
+        request,
+        'accounts/register.html'
+    )
 def user_login(request):
 
     if request.method == 'POST':
@@ -2018,5 +2074,235 @@ def risk_compliance(request):
     return render(
         request,
         "dashboard/risk_compliance.html",
+        context
+    )
+# ============================================================
+# EMAIL VERIFICATION
+# ============================================================
+
+@login_required
+def verify_email(request):
+
+    user = request.user
+
+    if user.email_verified:
+        messages.info(request, 'Your email is already verified.')
+        return redirect('dashboard')
+
+    if request.method == 'POST':
+
+        otp = request.POST.get('otp', '').strip()
+
+        if not otp:
+            messages.error(request, 'Please enter the OTP.')
+            return redirect('verify_email')
+
+        if not user.email_otp:
+            messages.error(
+                request,
+                'No email OTP found. Please request a new OTP.'
+            )
+            return redirect('verify_email')
+
+        # OTP expiry: 10 minutes
+        if (
+            not user.email_otp_created_at
+            or timezone.now() >
+            user.email_otp_created_at + timedelta(minutes=10)
+        ):
+            messages.error(
+                request,
+                'Your email OTP has expired. Please request a new OTP.'
+            )
+            return redirect('verify_email')
+
+        if otp != user.email_otp:
+            messages.error(
+                request,
+                'Invalid email OTP.'
+            )
+            return redirect('verify_email')
+
+        # Verification successful
+        user.email_verified = True
+        user.email_otp = None
+        user.email_otp_created_at = None
+
+        user.save(
+            update_fields=[
+                'email_verified',
+                'email_otp',
+                'email_otp_created_at'
+            ]
+        )
+
+        messages.success(
+            request,
+            'Email verified successfully!'
+        )
+
+        return redirect('dashboard')
+
+    return render(
+        request,
+        'accounts/verify_email.html'
+    )
+
+
+# ============================================================
+# RESEND EMAIL OTP
+# ============================================================
+
+@login_required
+def resend_email_otp(request):
+
+    user = request.user
+
+    if user.email_verified:
+        messages.info(
+            request,
+            'Your email is already verified.'
+        )
+        return redirect('dashboard')
+
+    otp = str(random.randint(100000, 999999))
+
+    user.email_otp = otp
+    user.email_otp_created_at = timezone.now()
+
+    user.save(
+        update_fields=[
+            'email_otp',
+            'email_otp_created_at'
+        ]
+    )
+
+    subject = 'MultiBank AI - Email Verification OTP'
+
+    message = f"""
+Hello {user.username},
+
+Welcome to MultiBank AI!
+
+Your email verification OTP is:
+
+{otp}
+
+This OTP is valid for 10 minutes.
+
+If you did not create this account,
+please ignore this email.
+
+Regards,
+MultiBank AI
+"""
+
+    try:
+
+        send_mail(
+            subject,
+            message,
+            None,
+            [user.email],
+            fail_silently=False
+        )
+
+        messages.success(
+            request,
+            'A new verification OTP has been sent to your email.'
+        )
+
+    except Exception as e:
+
+        print("EMAIL VERIFICATION ERROR:", e)
+
+        messages.error(
+            request,
+            'Unable to send verification email. Please try again.'
+        )
+
+    return redirect('verify_email')
+User = get_user_model()
+
+
+def is_admin(user):
+    return user.is_authenticated and user.is_staff
+
+def admin_members(request):
+    search = request.GET.get('search', '').strip()
+    status = request.GET.get('status', '').strip()
+
+    members = User.objects.annotate(
+        bank_account_count=Count('bank_accounts', distinct=True),
+        total_balance=Sum('bank_accounts__balance')
+    )
+
+    # Search
+    if search:
+        members = members.filter(
+            Q(username__icontains=search) |
+            Q(email__icontains=search) |
+            Q(phone_number__icontains=search)
+        )
+
+    # Verification filter
+    if status == 'email_verified':
+        members = members.filter(email_verified=True)
+
+    elif status == 'email_pending':
+        members = members.filter(email_verified=False)
+
+    elif status == 'phone_verified':
+        members = members.filter(phone_verified=True)
+
+    elif status == 'phone_pending':
+        members = members.filter(phone_verified=False)
+
+    members = members.order_by('-date_joined')
+
+    total_members = User.objects.count()
+
+    verified_email_count = User.objects.filter(
+        email_verified=True
+    ).count()
+
+    total_bank_accounts = BankAccount.objects.count()
+
+    context = {
+        'members': members,
+        'total_members': total_members,
+        'verified_email_count': verified_email_count,
+        'total_bank_accounts': total_bank_accounts,
+        'search': search,
+        'status': status,
+    }
+
+    return render(
+        request,
+        'dashboard/admin_members.html',
+        context
+    )
+@user_passes_test(is_admin)
+def admin_member_detail(request, user_id):
+
+    member = User.objects.prefetch_related(
+        'bank_accounts'
+    ).get(id=user_id)
+
+    bank_accounts = member.bank_accounts.all()
+
+    total_balance = sum(
+        account.balance for account in bank_accounts
+    )
+
+    context = {
+        'member': member,
+        'bank_accounts': bank_accounts,
+        'total_balance': total_balance,
+    }
+
+    return render(
+        request,
+        'dashboard/admin_member_detail.html',
         context
     )
