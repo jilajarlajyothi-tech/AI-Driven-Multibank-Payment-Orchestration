@@ -1,11 +1,601 @@
-body {
-    background: #050018 !important;
+/* =========================================================
+   MULTIBANK AI — DJANGO ADMIN THEME
+   ========================================================= */
+
+:root {
+    --mb-bg: #050018;
+    --mb-bg-2: #09051a;
+    --mb-card: #0b081e;
+    --mb-card-2: #111022;
+    --mb-purple: #7c3aed;
+    --mb-purple-light: #a855f7;
+    --mb-cyan: #00d9ff;
+    --mb-text: #ffffff;
+    --mb-muted: #a9a0b8;
+    --mb-border: rgba(139, 92, 246, 0.25);
+    --mb-success: #22c55e;
+    --mb-danger: #ef4444;
 }
 
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+html,
+body {
+    background: var(--mb-bg) !important;
+}
+
+body {
+    color: var(--mb-text) !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(124, 58, 237, 0.20),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 100%,
+            rgba(0, 217, 255, 0.08),
+            transparent 30%
+        ),
+        var(--mb-bg) !important;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
 #header {
-    background: #0b081e !important;
+    min-height: 70px !important;
+
+    background:
+        linear-gradient(
+            90deg,
+            #050018 0%,
+            #10062b 50%,
+            #050018 100%
+        ) !important;
+
+    border-bottom:
+        1px solid
+        rgba(0, 217, 255, 0.20) !important;
+
+    box-shadow:
+        0 8px 30px
+        rgba(0, 0, 0, 0.35) !important;
+
+    padding: 0 30px !important;
+}
+
+
+/* =========================================================
+   MULTIBANK AI BRAND
+   ========================================================= */
+
+#site-name {
+    padding: 18px 0 !important;
 }
 
 #site-name a {
-    color: #00d9ff !important;
+    color: #ffffff !important;
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+    letter-spacing: 0.3px;
+}
+
+#site-name a::after {
+    color: var(--mb-cyan);
+}
+
+
+/* =========================================================
+   USER TOOLS
+   ========================================================= */
+
+#user-tools {
+    color: var(--mb-muted) !important;
+    font-size: 13px !important;
+}
+
+#user-tools strong {
+    color: #ffffff !important;
+}
+
+#user-tools a {
+    color: var(--mb-cyan) !important;
+    text-decoration: none !important;
+}
+
+#user-tools a:hover {
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+#content {
+    background: transparent !important;
+    padding: 35px !important;
+    max-width: none !important;
+}
+
+
+/* =========================================================
+   PAGE TITLE
+   ========================================================= */
+
+#content h1 {
+    color: #ffffff !important;
+    font-size: 30px !important;
+    font-weight: 800 !important;
+    margin-bottom: 25px !important;
+}
+
+#content h2 {
+    color: var(--mb-cyan) !important;
+    font-weight: 700 !important;
+}
+
+#content h3 {
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   BREADCRUMBS
+   ========================================================= */
+
+.breadcrumbs {
+    background: var(--mb-card) !important;
+
+    color: var(--mb-muted) !important;
+
+    border-bottom:
+        1px solid
+        var(--mb-border) !important;
+
+    padding: 13px 30px !important;
+}
+
+.breadcrumbs a {
+    color: var(--mb-cyan) !important;
+    text-decoration: none !important;
+}
+
+
+/* =========================================================
+   MODULE / CARD
+   ========================================================= */
+
+.module {
+    background: var(--mb-card) !important;
+
+    border:
+        1px solid
+        var(--mb-border) !important;
+
+    border-radius: 16px !important;
+
+    overflow: hidden !important;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0, 0, 0, 0.30) !important;
+
+    margin-bottom: 25px !important;
+}
+
+
+/* =========================================================
+   MODULE HEADER
+   ========================================================= */
+
+.module caption,
+.module h2 {
+    background:
+        linear-gradient(
+            90deg,
+            #160b34,
+            #0d0821
+        ) !important;
+
+    color: var(--mb-cyan) !important;
+
+    border-bottom:
+        1px solid
+        var(--mb-border) !important;
+
+    padding: 15px 18px !important;
+
+    font-size: 14px !important;
+
+    font-weight: 700 !important;
+}
+
+
+/* =========================================================
+   DASHBOARD APP TABLES
+   ========================================================= */
+
+#content-main .module table {
+    width: 100% !important;
+    background: var(--mb-card) !important;
+}
+
+#content-main .module table th {
+    background: #120d2b !important;
+    color: #ffffff !important;
+
+    border-bottom:
+        1px solid
+        var(--mb-border) !important;
+}
+
+#content-main .module table td {
+    background: var(--mb-card) !important;
+    color: #ddd6e8 !important;
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.05) !important;
+}
+
+#content-main .module table tr:hover td {
+    background:
+        rgba(124, 58, 237, 0.15) !important;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+    color: var(--mb-cyan) !important;
+}
+
+a:hover {
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   CHANGE LIST TABLE
+   ========================================================= */
+
+#changelist {
+    background: transparent !important;
+}
+
+#changelist-form {
+    background: transparent !important;
+}
+
+#changelist table {
+    background: var(--mb-card) !important;
+
+    border:
+        1px solid
+        var(--mb-border) !important;
+
+    border-radius: 14px !important;
+
+    overflow: hidden !important;
+}
+
+#changelist table thead th {
+    background: #120d2b !important;
+
+    color: var(--mb-cyan) !important;
+
+    padding: 14px !important;
+
+    border-bottom:
+        1px solid
+        var(--mb-border) !important;
+}
+
+#changelist table tbody tr {
+    background: var(--mb-card) !important;
+
+    color: #e8e3ef !important;
+
+    transition: 0.2s ease;
+}
+
+#changelist table tbody tr:nth-child(even) {
+    background: #09061a !important;
+}
+
+#changelist table tbody tr:hover {
+    background:
+        rgba(124, 58, 237, 0.15) !important;
+}
+
+#changelist table td {
+    color: #ddd6e8 !important;
+
+    padding: 13px !important;
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.05) !important;
+}
+
+#changelist table a {
+    color: var(--mb-cyan) !important;
+    text-decoration: none !important;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.button {
+    background:
+        linear-gradient(
+            90deg,
+            var(--mb-purple),
+            var(--mb-cyan)
+        ) !important;
+
+    color: #ffffff !important;
+
+    border: none !important;
+
+    border-radius: 9px !important;
+
+    padding: 10px 18px !important;
+
+    font-weight: 700 !important;
+
+    cursor: pointer !important;
+
+    transition: all 0.25s ease !important;
+}
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.submit-row input:hover,
+a.button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 217, 255, 0.22) !important;
+}
+
+
+/* =========================================================
+   ADD BUTTON
+   ========================================================= */
+
+.addlink {
+    background:
+        linear-gradient(
+            90deg,
+            var(--mb-purple),
+            var(--mb-cyan)
+        ) !important;
+
+    color: white !important;
+
+    border-radius: 8px !important;
+
+    padding: 7px 12px !important;
+}
+
+
+/* =========================================================
+   FORM INPUTS
+   ========================================================= */
+
+input,
+textarea,
+select {
+    background: #050018 !important;
+
+    color: #ffffff !important;
+
+    border:
+        1px solid
+        rgba(139, 92, 246, 0.35) !important;
+
+    border-radius: 8px !important;
+
+    padding: 9px !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color:
+        var(--mb-cyan) !important;
+
+    outline: none !important;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(0, 217, 255, 0.10) !important;
+}
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+label {
+    color: #d7d0df !important;
+    font-weight: 600 !important;
+}
+
+
+/* =========================================================
+   HELP TEXT
+   ========================================================= */
+
+.help,
+.helptext {
+    color: var(--mb-muted) !important;
+}
+
+
+/* =========================================================
+   FILTER SIDEBAR
+   ========================================================= */
+
+#changelist-filter {
+    background: var(--mb-card) !important;
+
+    border-left:
+        1px solid
+        var(--mb-border) !important;
+
+    color: #c8c0d4 !important;
+}
+
+#changelist-filter h2 {
+    background: #120d2b !important;
+    color: var(--mb-cyan) !important;
+}
+
+#changelist-filter h3 {
+    color: #ffffff !important;
+}
+
+#changelist-filter a {
+    color: #bdb5c9 !important;
+}
+
+#changelist-filter a:hover {
+    color: var(--mb-cyan) !important;
+}
+
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+
+.paginator {
+    background: var(--mb-card) !important;
+
+    color: #c8c0d4 !important;
+
+    border:
+        1px solid
+        var(--mb-border) !important;
+
+    border-radius: 10px !important;
+
+    padding: 10px !important;
+}
+
+.paginator a {
+    color: var(--mb-cyan) !important;
+}
+
+
+/* =========================================================
+   RECENT ACTIONS
+   ========================================================= */
+
+#content-related {
+    background: transparent !important;
+}
+
+#content-related .module {
+    background: var(--mb-card) !important;
+}
+
+#content-related h2 {
+    color: var(--mb-cyan) !important;
+    background: #120d2b !important;
+}
+
+#content-related ul {
+    background: var(--mb-card) !important;
+}
+
+#content-related li {
+    color: #c8c0d4 !important;
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.05) !important;
+}
+
+
+/* =========================================================
+   SELECTED ROW
+   ========================================================= */
+
+tr.selected {
+    background:
+        rgba(124, 58, 237, 0.20) !important;
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+   ========================================================= */
+
+.deletelink {
+    background: #dc2626 !important;
+
+    color: #ffffff !important;
+
+    border-radius: 8px !important;
+
+    padding: 9px 15px !important;
+}
+
+.deletelink:hover {
+    background: #ef4444 !important;
+}
+
+
+/* =========================================================
+   SUCCESS MESSAGES
+   ========================================================= */
+
+.messagelist li.success {
+    background:
+        rgba(34, 197, 94, 0.15) !important;
+
+    color: #86efac !important;
+
+    border:
+        1px solid
+        rgba(34, 197, 94, 0.25) !important;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+#footer {
+    background: var(--mb-bg) !important;
+
+    color: #71687d !important;
+
+    border-top:
+        1px solid
+        rgba(139, 92, 246, 0.15) !important;
+
+    padding: 20px !important;
 }

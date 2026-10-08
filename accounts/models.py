@@ -153,10 +153,90 @@ class Payment(models.Model):
         max_length=20,
         default='SUCCESS'
     )
+    fraud_probability = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=0
+    )
+
+    risk_level = models.CharField(
+        max_length=20,
+        default='LOW'
+    )
+
+    fraud_prediction = models.IntegerField(
+        default=0
+    )
 
     created_at = models.DateTimeField(
         auto_now_add=True
     )
+class RiskCompliance(models.Model):
+
+    RISK_LEVELS = [
+        ('LOW', 'Low'),
+        ('MEDIUM', 'Medium'),
+        ('HIGH', 'High'),
+    ]
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='risk_compliance_records'
+    )
+
+    payment = models.ForeignKey(
+        Payment,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='risk_compliance_records'
+    )
+
+    risk_level = models.CharField(
+        max_length=10,
+        choices=RISK_LEVELS,
+        default='LOW'
+    )
+
+    risk_score = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=0
+    )
+
+    fraud_probability = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=0
+    )
+
+    compliance_score = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=100
+    )
+
+    aml_status = models.CharField(
+        max_length=20,
+        default='CLEAR'
+    )
+
+    transaction_status = models.CharField(
+        max_length=30,
+        default='MONITORED'
+    )
+
+    notes = models.TextField(
+        blank=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return f"{self.user.username} - {self.risk_level} - {self.risk_score}"
 
     def __str__(self):
         return f"{self.user.username} - {self.payment_type} - ₹{self.amount}"

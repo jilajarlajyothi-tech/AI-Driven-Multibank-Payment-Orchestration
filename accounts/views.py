@@ -12,7 +12,7 @@ from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
 from django.db.models import Sum , Q, Count
-from .models import BankAccount,Payment
+from .models import BankAccount,Payment,RiskCompliance
 from accounts.models import CustomUser
 from ml.fraud_detector import detect_fraud
 from decimal import Decimal
@@ -1191,32 +1191,59 @@ def confirm_payment(request):
             # CREATE PAYMENT RECORD
             # ====================================================
 
-            payment = Payment.objects.create(
+        payment = Payment.objects.create(
 
-                transaction_id=
-                    transaction_id,
+            transaction_id=
+        transaction_id,
 
-                user=
-                    request.user,
+            user=
+        request.user,
 
-                payment_type=
-                    payment_type,
+            payment_type=
+        payment_type,
 
-                amount=
-                    amount,
+            amount=
+        amount,
 
-                cashback=
-                    0,
+            cashback=
+        0,
 
-                reward_points=
-                    0,
+            reward_points=
+        0,
 
-                description=
-                    service_description,
+            description=
+        service_description,
 
-                status=
-                    'SUCCESS'
-            )
+            status=
+        'SUCCESS',
+
+            fraud_probability=
+        fraud_probability,
+
+            risk_level=
+        risk_level,
+
+            fraud_prediction=
+        prediction
+    )
+        RiskCompliance.objects.create(
+    user=request.user,
+    payment=payment,
+    risk_level=risk_level,
+    risk_score=(
+        fraud_probability
+    ),
+    fraud_probability=fraud_probability,
+    compliance_score=(
+        100 - fraud_probability
+    ),
+    aml_status='CLEAR',
+    transaction_status='APPROVED',
+    notes=(
+        'AI fraud detection completed successfully. '
+        'Transaction approved for payment processing.'
+    )
+)
 
 
         # ========================================================
